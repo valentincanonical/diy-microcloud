@@ -126,7 +126,24 @@ If you are using Raspberry Pis instead, you can [follow this tutorial to install
 
 ### #2 Cluster the machines with LXD: your first cloud!
 
-<!-- ToDo: Summary of the section's goals and outcomes -->
+_Expected duration: 15mn_
+
+This section is the moment we get to build our first cloud capabilities. We will cluster the four physical machines together, abstracting them as a virtual layer capable of providing both Linux containers and virtual machines. We will then have virtual machines from almost any Linux distribution available no more than one command away. (If you're a more advanced user, [read more on how to get Windows VMs](https://github.com/lxc/distrobuilder#repack-windows-iso).)
+
+<!-- ToDo: Add option with the LXD charm and Juju -->
+
+Abstracting away from the bare metal layer is a practical step to building automated, scalable, and modular micro clouds. You may wonder why we don't just go directly with the K8s layer - and you could do it -, so here's what you get with the additional LXD virtualisation layer:
+
+- Increased security: machine containers provide better protection than K8s containers to keep your workloads confined;
+- Multi-tenancy: in some situations, you might need more than one K8s cluster on the same micro cloud - don't shut any door now;
+- Flexibility: adding and removing physical nodes has never been easier - with LXD, you can [move containers/virtual machines](https://linuxcontainers.org/lxc/manpages/man1/lxc-copy.1.html) between physical nodes;
+- High availability: LXD adds a layer of resiliency to failures and outages with built-in high availability from 3 nodes and above;
+- Simplified operations: the more you can abstract, the more you will standardise and automate remote management operations.
+
+<!-- ToDo: diagram? inspiration: https://teskalabs.com/blog/building-private-cloud-lxc -->
+
+<!-- ToDo: Options 1 & 2, with and without automation -->
+[Tutorial Step 2: build your edge cloud using LXD, click here to follow the steps.](./step02-lxd-cloud/README.md)
 
 > **Checkpoint #2: Four-node LXD cluster ready to operate.**
 
