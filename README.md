@@ -14,6 +14,8 @@ This workshop gets you started.
 For beginners, from install, set-up and config of an Ubuntu K8s cluster.
 And experts, talking DevOps, AI use cases, and inferences at the edge, on something as simple and accessible as a Raspberry Pi or a Jetson Nano.
 
+<!-- ToDo: Section about "what are micro clouds" / Goals -->
+
 <!-- ToDo: Insert a diagram here -->
 
 ## Minimum Configuration
@@ -105,13 +107,13 @@ Options:
 
 > **Checkpoint #3: LXD cloud can be controlled remotely.**
 
-### #4 On demand MicroK8s clusters: a micro cloud dream
+### #4 Create on-demand MicroK8s clusters: a micro cloud dream
 
 <!-- ToDo: Summary of the section's goals and outcomes -->
 
 > **Checkpoint #4: MicroK8s cluster on LXD, up and running.**
 
-### #5 Cloud-native applications running at the edge on the micro cloud
+### #5 Run cloud-native applications at the edge with micro clouds
 
 <!-- Bonus -->
 
@@ -120,3 +122,9 @@ Options:
 > **Checkpoint #4: Application deployed on *production* MicroK8s.**
 
 <!-- ToDo: find a better application use case for the micro cloud scenario. -->
+
+<!-- Ideas for later: add distributed storage, add MAAS, add networking -->
+
+### Authors/Reviewers
+
+- Valentin Viennot, Product Manager, Canonical (Twitter: [@ValentinViennot](https://twitter.com/valentinviennot))
