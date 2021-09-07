@@ -83,13 +83,44 @@ Options:
 
  -->
 
-<!-- ToDo: text to explain the checkpoints/parts -->
+To make it easier to follow, we split this tutorial into five steps with clear goals.
+At the end of each step, a checkpoint will help you understand what is the outcome.
+If you can't get to the checkpoint, please reach out for help to the staff or [online forums](ToDo: discourse).
+<!-- ToDo: add proper forums + github issues -->
 
-> **Checkpoint #0: Minimum requirements & Multipass installed.**
+> **Checkpoint #0: [Minimum requirements matched.](#minimum-configuration)**    
+> _If you are not going with the [Multipass](https://multipass.run/) (virtual machines) option, you can ignore this checkpoint as requirements will differ._
 
-### #1 Set-up the four-node cluster
+### #1 Prepare the bare metal nodes
 
-<!-- ToDo: Summary of the section's goals and outcomes -->
+_Expected duration: 5mn_
+
+> In a usual micro cloud setup, this step - bare metal provisioning - would be fully automated. [Metal as a Service (MAAS)](https://maas.io/) can provision several to hundreds of physical servers and micro clouds spread over various locations. MAAS provides a way to flexibly deploy, manage, and maintain operating system loads on physical servers. It keeps track of all servers and their configurations available in the micro cloud. It is the base layer of the micro cloud stack.
+
+> In this virtual and one-site configuration, we won't be using MAAS. As micro clouds are fully modular, this will allow us to focus on the virtualisation and K8s layers. I invite you to [read more about MAAS](https://maas.io/tutorials) to automate your bare metal provisioning in further micro cloud deployments!
+
+This first step guides you through the provisioning of four Ubuntu machines using Multipass. The four virtual machines will emulate four physical nodes - let them be Raspberry Pis or any other small edge hardware.
+
+```sh
+# Let's use bash to loop over the creation of four Ubuntu machines using Multipass
+$ for i in {1..4}; do multipass launch --name node$i --mem 4G --disk 10G; done;
+Launched: node1                                                                 
+Launched: node2                                                                 
+Launched: node3                                                                 
+Launched: node4
+
+$ multipass list
+Name                    State             IPv4             Image
+node1                   Running           192.168.64.32    Ubuntu 20.04 LTS
+node2                   Running           192.168.64.33    Ubuntu 20.04 LTS
+node3                   Running           192.168.64.34    Ubuntu 20.04 LTS
+node4                   Running           192.168.64.35    Ubuntu 20.04 LTS
+
+$ multipass shell node1
+ubuntu@node1:~$ # That's it! We now have four Ubuntu identical machines ready-to-go
+```
+
+If you are using Raspberry Pis instead, you can [follow this tutorial to install the latest Ubuntu Server](https://ubuntu.com/tutorials/how-to-install-ubuntu-on-your-raspberry-pi#1-overview). I recommend using RPi 4+ 8GB, or above. (For stable deployments, I recommend you consider [the USB boot option](https://ubuntu.com/tutorials/how-to-install-ubuntu-desktop-on-raspberry-pi-4#4-optional-usb-boot) from an SSD instead of the SD card - from Ubuntu 20.10.)
 
 > **Checkpoint #1: Four Ubuntu machines on the same network.**
 
