@@ -14,6 +14,22 @@ This workshop gets you started.
 For beginners, from install, set-up and config of an Ubuntu K8s cluster.
 And experts, talking DevOps, AI use cases, and inferences at the edge, on something as simple and accessible as a Raspberry Pi or a Jetson Nano.
 
+Table of Contents
+=================
+
+   * [Abstract](#abstract)
+   * [Minimum Configuration](#minimum-configuration)
+   * [Building Your Home Lab Micro Cloud in 5 Steps](#building-your-home-lab-micro-cloud-in-5-steps)
+      * [#1 Prepare the bare metal nodes](#1-prepare-the-bare-metal-nodes)
+      * [#2 Cluster the machines with LXD: your first cloud!](#2-cluster-the-machines-with-lxd-your-first-cloud)
+      * [#3 Register your cloud for model-driven operations](#3-register-your-cloud-for-model-driven-operations)
+      * [#4 Create on-demand MicroK8s clusters: a micro cloud dream](#4-create-on-demand-microk8s-clusters-a-micro-cloud-dream)
+      * [#5 Run cloud-native applications at the edge with micro clouds](#5-run-cloud-native-applications-at-the-edge-with-micro-clouds)
+         * [Register your MicroK8s edge clusters with Portainer](#register-your-microk8s-edge-clusters-with-portainer)
+         * [Register your MicroK8s edge clusters with Juju](#register-your-microk8s-edge-clusters-with-juju)
+         * [Deploy applications to your micro cloud with Juju and Charms](#deploy-applications-to-your-micro-cloud-with-juju-and-charms)
+   * [Authors/Reviewers](#authorsreviewers)
+
 <!-- ToDo: Section about "what are micro clouds" / Goals -->
 
 <!-- ToDo: Insert a diagram here -->
@@ -173,6 +189,27 @@ Abstracting away from the bare metal layer is a practical step to building autom
 
 <!-- Ideas for later: add distributed storage, add MAAS, add networking -->
 
-### Authors/Reviewers
+## Authors/Reviewers
 
 - Valentin Viennot, Product Manager, Canonical (Twitter: [@ValentinViennot](https://twitter.com/valentinviennot))
+<!-- ToDo: get relevant reviews from the different product teams involved. -->
+
+<!-- ToDo: validate license terms -->
+
+Table of Content generated with [gh-md-toc](https://github.com/ekalinin/github-markdown-toc).
+
+---
+
+ Copyright 2021 Valentin Viennot for Canonical Ltd.
+
+   [Licensed under the Apache License](./LICENSE), Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
