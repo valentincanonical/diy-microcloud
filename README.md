@@ -111,6 +111,8 @@ If you can't get to the checkpoint, please reach out for help to the staff or [o
 
 _Expected duration: 5mn_
 
+<!-- ToDo: refactor the big blocks of text -->
+
 > In a usual micro cloud setup, this step - bare metal provisioning - would be fully automated. [Metal as a Service (MAAS)](https://maas.io/) can provision several to hundreds of physical servers and micro clouds spread over various locations. MAAS provides a way to flexibly deploy, manage, and maintain operating system loads on physical servers. It keeps track of all servers and their configurations available in the micro cloud. It is the base layer of the micro cloud stack.
 
 > In this virtual and one-site configuration, we won't be using MAAS. As micro clouds are fully modular, this will allow us to focus on the virtualisation and K8s layers. I invite you to [read more about MAAS](https://maas.io/tutorials) to automate your bare metal provisioning in further micro cloud deployments!
@@ -144,7 +146,8 @@ If you are using Raspberry Pis instead, you can [follow this tutorial to install
 
 _Expected duration: 15mn_
 
-This section is the moment we get to build our first cloud capabilities. We will cluster the four physical machines together, abstracting them as a virtual layer capable of providing both Linux containers and virtual machines. We will then have virtual machines from almost any Linux distribution available no more than one command away. (If you're a more advanced user, [read more on how to get Windows VMs](https://github.com/lxc/distrobuilder#repack-windows-iso).)
+This section is the moment we get to build our first cloud capabilities. We will cluster the four physical machines together, abstracting them as a virtual layer capable of providing both Linux containers and virtual machines.
+We will then have virtual machines from almost any Linux distribution available no more than one command away. (If you're a more advanced user, [read more on how to get Windows VMs](https://github.com/lxc/distrobuilder#repack-windows-iso).)
 
 <!-- ToDo: Add option with the LXD charm and Juju -->
 
@@ -159,9 +162,24 @@ Abstracting away from the bare metal layer is a practical step to building autom
 <!-- ToDo: diagram? inspiration: https://teskalabs.com/blog/building-private-cloud-lxc -->
 
 <!-- ToDo: Options 1 & 2, with and without automation -->
-[Tutorial Step 2: build your edge cloud using LXD, click here to follow the steps.](./step02-lxd-cloud/README.md)
+[Tutorial Step 2: Build your edge cloud using LXD, click here and follow the instructions.](./step02-lxd-cloud/README.md)
 
 > **Checkpoint #2: Four-node LXD cluster ready to operate.**
+
+```sh
+ubuntu@node4:~$ lxc cluster list
++-------+----------------------------+----------+--------+-------------------+--------------+
+| NAME  |            URL             | DATABASE | STATE  |      MESSAGE      | ARCHITECTURE |
++-------+----------------------------+----------+--------+-------------------+--------------+
+| node1 | https://192.168.64.32:8443 | YES      | ONLINE | Fully operational | x86_64       |
++-------+----------------------------+----------+--------+-------------------+--------------+
+| node2 | https://192.168.64.33:8443 | YES      | ONLINE | Fully operational | x86_64       |
++-------+----------------------------+----------+--------+-------------------+--------------+
+| node3 | https://192.168.64.34:8443 | YES      | ONLINE | Fully operational | x86_64       |
++-------+----------------------------+----------+--------+-------------------+--------------+
+| node4 | https://192.168.64.35:8443 | YES      | ONLINE | Fully operational | x86_64       |
++-------+----------------------------+----------+--------+-------------------+--------------+
+```
 
 ### #3 Register your cloud for model-driven operations
 
