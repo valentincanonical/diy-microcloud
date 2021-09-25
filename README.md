@@ -32,15 +32,13 @@ Table of Contents
 
 <!-- ToDo: Section about "what are micro clouds" / Goals -->
 
-<!-- ToDo: Insert a diagram here -->
+![Micro cloud: cloudish layer cake.](https://res.cloudinary.com/canonical/image/fetch/f_auto,q_auto,fl_sanitize,w_752,h_430/https://assets.ubuntu.com/v1/1bb2f79a-telco-micro-clouds.svg)
 
 ## Minimum Configuration
 
 > To enable the most to follow this tutorial at home, we won't require any specific hardware - only your workstation will do it.
 > Nonetheless, you will find secondary paths and alternative options all along, including instructions to use a cluster of Raspberry Pis.
 > The following requirements apply if you're willing to follow the primary path, using virtualisation to emulate multiple small devices.
-
-<!-- ToDo: Instructions to use RPis  -->
 
 - 16GB RAM recommended (8GB min required);
 - Min 50GB of storage left;
@@ -90,6 +88,8 @@ Click to expand the instructions.
 
 ## Building Your Home Lab Micro Cloud in 5 Steps
 
+![Architecture Overview](./img/architecture-overview.png)
+
 <!-- 
 
 Options: 
@@ -101,11 +101,10 @@ Options:
 
 To make it easier to follow, we split this tutorial into five steps with clear goals.
 At the end of each step, a checkpoint will help you understand what is the outcome.
-If you can't get to the checkpoint, please reach out for help to the staff or [online forums](ToDo: discourse).
-<!-- ToDo: add proper forums + github issues -->
+If you can't get to the checkpoint, please reach out for help to the staff or [online forums](https://discourse.ubuntu.com/). You are also welcome to [open issues](https://github.com/valentincanonical/diy-microcloud/issues) directly on this repository.
 
 > **Checkpoint #0: [Minimum requirements matched.](#minimum-configuration)**    
-> _If you are not going with the [Multipass](https://multipass.run/) (virtual machines) option, you can ignore this checkpoint as requirements will differ._
+
 
 ### #1 Prepare the bare metal nodes
 
@@ -142,6 +141,8 @@ If you are using Raspberry Pis instead, you can [follow this tutorial to install
 
 > **Checkpoint #1: Four Ubuntu machines on the same network.**
 
+![Four Ubuntu machines on the same network.](./img/checkpoint-01.png)
+
 ### #2 Cluster the machines with LXD: your first cloud!
 
 _Expected duration: 15mn_
@@ -159,10 +160,9 @@ Abstracting away from the bare metal layer is a practical step to building autom
 - High availability: LXD adds a layer of resiliency to failures and outages with built-in high availability from 3 nodes and above;
 - Simplified operations: the more you can abstract, the more you will standardise and automate remote management operations.
 
-<!-- ToDo: diagram? inspiration: https://teskalabs.com/blog/building-private-cloud-lxc -->
+<!-- ToDo: Options 1 & 2, with and without automation - once LXD charm is ready -->
 
-<!-- ToDo: Options 1 & 2, with and without automation -->
-[Tutorial Step 2: Build your edge cloud using LXD, click here and follow the instructions.](./step02-lxd-cloud/README.md)
+[Tutorial Step 2: Instructions to build your edge cloud using LXD.](./step02-lxd-cloud/README.md#initiate-the-first-node)
 
 > **Checkpoint #2: Four-node LXD cluster ready to operate.**
 
@@ -180,6 +180,8 @@ ubuntu@node4:~$ lxc cluster list
 | node4 | https://192.168.64.35:8443 | YES      | ONLINE | Fully operational | x86_64       |
 +-------+----------------------------+----------+--------+-------------------+--------------+
 ```
+
+![Four-node LXD cluster ready to operate.](./img/checkpoint-02.png)
 
 ### #3 Register your cloud for model-driven operations
 
