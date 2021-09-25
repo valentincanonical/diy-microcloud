@@ -183,6 +183,7 @@ ubuntu@node4:~$ lxc cluster list
 
 ![Four-node LXD cluster ready to operate.](./img/checkpoint-02.png)
 
+<!-- ToDo: Might need to move section 3 before 2, and use Juju to bootstrap LXD cluster -->
 ### #3 Register your cloud for model-driven operations
 
 _Expected duration: 8mn_
@@ -203,7 +204,7 @@ With Charmed Operators, you can package concepts and operational knowledge. With
 <!-- ToDo: Add link to the Edge MDO blog entry on Ubuntu.com (TBD) -->
 <!-- ToDo: Add link to the Kubecon blogs (TBD) -->
 
-> You can decide to skip this step and jump to the end of the next section if you're going for the manual installation instead of using Juju and Charmed Operators.
+> You can decide to skip this step and [jump to the next section](#manually-deploy-a-microk8s-cluster) if you're going for the manual installation instead of using Juju and Charmed Operators.
 
 [Tutorial Step 3: Instructions to install Juju and register your LXD micro cloud.](./step03-juju-bootstrap/README.md#install-juju).
 
@@ -221,25 +222,103 @@ Model "admin/default" is empty.
 
 ### #4 Create on-demand MicroK8s clusters: a micro cloud dream
 
-<!-- ToDo: Summary of the section's goals and outcomes -->
+<!-- 19h10 -->
+_Expected Duration: 20mn_
+
+<!-- MicroK8s is a low-ops, minimal production Kubernetes, for devs, cloud, clusters, workstations, Edge and IoT.    
+In a micro cloud architecture, Kubernetes APIs make management of edge clusters easier to integrate with existing infrastructure and centralised control planes. MicroK8s is lightweight and yet features the K8s APIs, none added or removed. MicroK8s ships with with sensible defaults that ‘just work’. And from 3 nodes, MicroK8s automatically supports an highly-available configuration.
+
+#### Deploy on-demand kubernetes clusters with Juju
+
+Currently, there is no MicroK8s charm on [CharmHub](https://charmhub.io/), the Store for Charmed Operators. However, there is a version contributed [by @pjdc](https://launchpad.net/~pjdc/+git/charm-microk8s) a community member on Launchpad. It's just a matter of time until we get an official one!
+
+For this workshop, I forked pjdc's version and adapted it to work on top of LXD. We'll start by cloning my repository with the MicroK8s' Charmed Operator, a package with all the knowledge on how to deploy a MicroK8s cluster.
+
+```sh
+# Clone the modified Charmed Operator where you installed Juju at Step #3
+ubuntu@node1:~$ git clone -b fix/lxd https://git.launchpad.net/~valentinviennot/+git/charm-microk8s
+```
+
+In order, we will:
+- create a new model, a clean space to isolate our work;
+- deploy four microk8s nodes with a simple juju command;
+- sip a cocktail 🍹 while Juju does all the work for us (launch four LXD containers, install microk8s on each of them, and cluster them together).
+
+```sh
+ubuntu@node1:~$ juju models
+Controller: microcloud-default
+Model                Cloud/Region        Type  Status     Machines  Access  Last connection
+controller           microcloud/default  lxd   available         1  admin   just now
+default              microcloud/default  lxd   available         0  admin   8 minutes ago
+kubernetes-is-easy*  microcloud/default  lxd   available         0  admin   28 seconds ago
+
+ubuntu@node1:~$ juju add-model kubernetes-is-easy
+ubuntu@node1:~$ juju switch kubernetes-is-easy
+ubuntu@node1:~$ juju status
+Model               Controller          Cloud/Region        Version  SLA          Timestamp
+kubernetes-is-easy  microcloud-default  microcloud/default  2.9.14   unsupported  18:46:16+02:00
+
+Model "admin/kubernetes-is-easy" is empty.
+
+# We deploy the app 'microk8s' from the local charm with force option as we use an unvalidated LXD profile
+ubuntu@node1:~$ juju deploy ./charm-microk8s microk8s -n3 --force
+
+# We can watch operations as they happen with 'juju status'
+ubuntu@node1:~$ watch -cn0.5 juju status --color
+Model               Controller          Cloud/Region        Version  SLA          Timestamp
+kubernetes-is-easy  microcloud-default  microcloud/default  2.9.14   unsupported  18:58:25+02:00
+
+App       Version  Status   Scale  Charm     Store  Channel  Rev  OS      Message
+microk8s           waiting    0/3  microk8s  local             0  ubuntu  waiting for machine
+
+Unit        Workload  Agent       Machine  Public address  Ports  Message
+microk8s/0  waiting   allocating  0        240.33.0.11            waiting for machine
+microk8s/1  waiting   allocating  1                               waiting for machine
+microk8s/2  waiting   allocating  2                               waiting for machine
+
+Machine  State    DNS          Inst id        Series  AZ  Message
+0        pending  240.33.0.11  juju-ab5f48-0  focal       Running
+1        pending               pending        focal       Creating container
+2        pending               pending        focal
+```
+
+#### Manually deploy a MicroK8s cluster
+
+If you want to see what is happening under the hood, you can manually start LXD containers and set up MicroK8s. I would recommend using [the Juju option](#deploy-on-demand-kubernetes-clusters-with-juju) to save some time and uncover the power of Charmed Operators, but you're also good to go with this option. Installing MicroK8s is only the matter of one "snap install microk8s" command and a "microk8s add/join" per machine to cluster your nodes together. -->
+
+[Tutorial Step 4 (bis): Instructions to manually create MicroK8s clusters.](./step04-microk8s-clusters/README.md#manual-installation)
+
 
 > **Checkpoint #4: MicroK8s cluster on LXD, up and running.**
 
+```sh
+# ToDo: Paste status output with HA
+```
+
 ### #5 Run cloud-native applications at the edge with micro clouds
+
+Your micro cloud is now ready, registered, and you know how to create lightweight MicroK8s clusters on demand. The next steps are optional, feel free to pick what's the most interesting to you. The goal there is to get you productive with fancy applications running on your homelab micro cloud.
+
+#### Register your MicroK8s edge clusters with Portainer
+
+_Expected duration: Xmn_
+
+#### Register your MicroK8s edge clusters with Juju
+
+_Expected duration: Xmn_
+
+#### Deploy applications to your micro cloud with Juju and Charms
+
+_Expected duration: Xmn_
 
 <!-- Bonus -->
 
-<!-- ToDo: Summary of the section's goals and outcomes -->
-
 > **Checkpoint #4: Application deployed on *production* MicroK8s.**
-
-<!-- ToDo: find a better application use case for the micro cloud scenario. -->
-
-<!-- Ideas for later: add distributed storage, add MAAS, add networking -->
 
 ## Authors/Reviewers
 
 - Valentin Viennot, Product Manager, Canonical (Twitter: [@ValentinViennot](https://twitter.com/valentinviennot))
+
 <!-- ToDo: get relevant reviews from the different product teams involved. -->
 
 <!-- ToDo: validate license terms -->
