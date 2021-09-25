@@ -185,11 +185,39 @@ ubuntu@node4:~$ lxc cluster list
 
 ### #3 Register your cloud for model-driven operations
 
-<!-- Optional (if not going for Juju) -->
+_Expected duration: 8mn_
 
-<!-- ToDo: Summary of the section's goals and outcomes -->
+"[Model-Driven Operations](https://juju.is/model-driven-operations-manifesto), say what?" The concept is relatively easy yet extremely powerful. Imagine we were discussing over the phone, and you suddenly wanted me to draw you a sheep; you would have two options:
+- Guide me, step by step, trying to be as specific as possible - "draw four small vertical lines, now draw a circle on top..."
+- Or rely on my knowledge of concepts and simply ask, "can you draw me a sheep, please."
+
+I promise you; the first option won't give you anything even close to a sheep... and it will take us _a lot of time_.
+
+![Better sheep with Model Driven Operations.](./img/sheeps.jpg)
+
+(Ok, I'm not good at drawings... but still better when relying on shared concepts! :) )
+
+Now imagine I am a server, and there are thousands of us with slightly different configurations (different cloud, platform, architecture...). Wouldn't it be great if you could just teach me what a database is? And teach me how it relates to other applications to provide persistent storage? That's Model Driven Operations!    
+With Charmed Operators, you can package concepts and operational knowledge. With Juju, you can apply this knowledge with declarative queries, politely asking for what you need. "Please Juju, deploy this and that. Also, please Juju relate this with that." And that's it; you have a web server deployed on multiple clouds with a database properly configured and related to your web application! If you're interested, there's a lot of exciting and fun reads [on Juju.is](https://juju.is/blog).
+
+<!-- ToDo: Add link to the Edge MDO blog entry on Ubuntu.com (TBD) -->
+<!-- ToDo: Add link to the Kubecon blogs (TBD) -->
+
+> You can decide to skip this step and jump to the end of the next section if you're going for the manual installation instead of using Juju and Charmed Operators.
+
+[Tutorial Step 3: Instructions to install Juju and register your LXD micro cloud.](./step03-juju-bootstrap/README.md#install-juju).
 
 > **Checkpoint #3: LXD cloud can be controlled remotely.**
+
+```
+ubuntu@node1:~$ juju status
+Model    Controller          Cloud/Region        Version  SLA          Timestamp
+default  microcloud-default  microcloud/default  2.9.12   unsupported  13:05:13+02:00
+
+Model "admin/default" is empty.
+```
+
+![LXD cloud registered as a Juju cloud.](./img/checkpoint-03.png)
 
 ### #4 Create on-demand MicroK8s clusters: a micro cloud dream
 
