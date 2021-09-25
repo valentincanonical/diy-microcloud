@@ -32,7 +32,9 @@ Table of Contents
 
 <!-- ToDo: Section about "what are micro clouds" / Goals -->
 
-![Micro cloud: cloudish layer cake.](https://res.cloudinary.com/canonical/image/fetch/f_auto,q_auto,fl_sanitize,w_752,h_430/https://assets.ubuntu.com/v1/1bb2f79a-telco-micro-clouds.svg)
+<p align="center">
+<img alt="Micro cloud: cloudish layer cake." src="https://res.cloudinary.com/canonical/image/fetch/f_auto,q_auto,fl_sanitize,w_752,h_430/https://assets.ubuntu.com/v1/1bb2f79a-telco-micro-clouds.svg" width="500" />
+</p>
 
 ## Minimum Configuration
 
@@ -88,8 +90,7 @@ Click to expand the instructions.
 
 ## Building Your Home Lab Micro Cloud in 5 Steps
 
-![Architecture Overview](./img/architecture-overview.png)
-
+<img alt="Architecture Overview" src="./img/architecture-overview.png" width="500" />
 <!-- 
 
 Options: 
@@ -141,7 +142,7 @@ If you are using Raspberry Pis instead, you can [follow this tutorial to install
 
 > **Checkpoint #1: Four Ubuntu machines on the same network.**
 
-![Four Ubuntu machines on the same network.](./img/checkpoint-01.png)
+<img alt="Four Ubuntu machines on the same network." src="./img/checkpoint-01.png" width="500" />
 
 ### #2 Cluster the machines with LXD: your first cloud!
 
@@ -181,7 +182,7 @@ ubuntu@node4:~$ lxc cluster list
 +-------+----------------------------+----------+--------+-------------------+--------------+
 ```
 
-![Four-node LXD cluster ready to operate.](./img/checkpoint-02.png)
+<img alt="Four-node LXD cluster ready to operate." src="./img/checkpoint-02.png" width="500" />
 
 <!-- ToDo: Might need to move section 3 before 2, and use Juju to bootstrap LXD cluster -->
 ### #3 Register your cloud for model-driven operations
@@ -194,7 +195,7 @@ _Expected duration: 8mn_
 
 I promise you; the first option won't give you anything even close to a sheep... and it will take us _a lot of time_.
 
-![Better sheep with Model Driven Operations.](./img/sheeps.jpg)
+<img alt="Better sheep with Model Driven Operations." src="./img/sheeps.jpg" width="400" />
 
 (Ok, I'm not good at drawings... but still better when relying on shared concepts! :) )
 
@@ -218,7 +219,7 @@ default  microcloud-default  microcloud/default  2.9.12   unsupported  13:05:13+
 Model "admin/default" is empty.
 ```
 
-![LXD cloud registered as a Juju cloud.](./img/checkpoint-03.png)
+<img alt="LXD cloud registered as a Juju cloud." src="./img/checkpoint-03.png" width="500" />
 
 ### #4 Create on-demand MicroK8s clusters: a micro cloud dream
 
@@ -291,13 +292,17 @@ If you want to see what is happening under the hood, you can manually start LXD 
 
 > **Checkpoint #4: MicroK8s cluster on LXD, up and running.**
 
-```sh
+<!-- ```sh
 # ToDo: Paste status output with HA
-```
+``` -->
+
+<img alt="" src="./img/checkpoint-04.png" width="500" />
 
 ### #5 Run cloud-native applications at the edge with micro clouds
 
 Your micro cloud is now ready, registered, and you know how to create lightweight MicroK8s clusters on demand. The next steps are optional, feel free to pick what's the most interesting to you. The goal there is to get you productive with fancy applications running on your homelab micro cloud.
+
+<img alt="" src="./img/checkpoint-05.png" width="500" />
 
 #### Register your MicroK8s edge clusters with Portainer
 
