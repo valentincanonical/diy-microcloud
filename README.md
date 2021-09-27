@@ -20,20 +20,25 @@ Table of Contents
    * [Abstract](#abstract)
    * [Minimum Configuration](#minimum-configuration)
    * [Building Your Home Lab Micro Cloud in 5 Steps](#building-your-home-lab-micro-cloud-in-5-steps)
+      * [1,2,3... 4 nodes](#123-4-nodes)
+      * [Checkpoint 0](#checkpoint-0)
       * [#1 Prepare the bare metal nodes](#1-prepare-the-bare-metal-nodes)
-      * [#2 Cluster the machines with LXD: your first cloud!](#2-cluster-the-machines-with-lxd-your-first-cloud)
-      * [#3 Register your cloud for model-driven operations](#3-register-your-cloud-for-model-driven-operations)
-      * [#4 Create on-demand MicroK8s clusters: a micro cloud dream](#4-create-on-demand-microk8s-clusters-a-micro-cloud-dream)
+      * [#2 Register for model-driven operations](#2-register-for-model-driven-operations)
+         * [What are Model-Driven Operations?](#what-are-model-driven-operations)
+         * [Register the bare nodes with Juju](#register-the-bare-nodes-with-juju)
+      * [#3 Cluster the machines with LXD: your first cloud!](#3-cluster-the-machines-with-lxd-your-first-cloud)
+         * [Build your private LXD cloud in one command with Juju](#build-your-private-lxd-cloud-in-one-command-with-juju)
+         * [Register your LXD cloud with Juju](#register-your-lxd-cloud-with-juju)
+         * [Manually deploy LXD cluster](#manually-deploy-lxd-cluster)
+      * [#4 Create on-demand MicroK8s clusters](#4-create-on-demand-microk8s-clusters)
       * [#5 Run cloud-native applications at the edge with micro clouds](#5-run-cloud-native-applications-at-the-edge-with-micro-clouds)
          * [Register your MicroK8s edge clusters with Portainer](#register-your-microk8s-edge-clusters-with-portainer)
          * [Register your MicroK8s edge clusters with Juju](#register-your-microk8s-edge-clusters-with-juju)
          * [Deploy applications to your micro cloud with Juju and Charms](#deploy-applications-to-your-micro-cloud-with-juju-and-charms)
    * [Authors/Reviewers](#authorsreviewers)
 
-<!-- ToDo: Section about "what are micro clouds" / Goals -->
-
 <p align="center">
-<img alt="Micro cloud: cloudish layer cake." src="https://res.cloudinary.com/canonical/image/fetch/f_auto,q_auto,fl_sanitize,w_752,h_430/https://assets.ubuntu.com/v1/1bb2f79a-telco-micro-clouds.svg" width="500" />
+<img alt="Micro cloud: cloudish layer cake." src="https://res.cloudinary.com/canonical/image/fetch/f_auto,q_auto,fl_sanitize,w_752,h_430/https://assets.ubuntu.com/v1/1bb2f79a-telco-micro-clouds.svg" width="400" />
 </p>
 
 ## Minimum Configuration
@@ -42,7 +47,8 @@ Table of Contents
 > Nonetheless, you will find secondary paths and alternative options all along, including instructions to use a cluster of Raspberry Pis.
 > The following requirements apply if you're willing to follow the primary path, using virtualisation to emulate multiple small devices.
 
-- 16GB RAM recommended (8GB min required);
+- 32GB RAM recommended (16GB min required);
+- CPU with at least 4 cores;
 - Min 50GB of storage left;
 - [Multipass installed](https://multipass.run/) for your platform.
 
@@ -54,7 +60,7 @@ Click to expand the instructions.
     </summary> -->
 
 ```sh
-    $ multipass launch --name iamatest --mem 8G --disk 10G
+    $ multipass launch --name iamatest --mem 16G --disk 10GB --cpus 4
     Launched: iamatest 
 
     $ multipass list
@@ -90,15 +96,12 @@ Click to expand the instructions.
 
 ## Building Your Home Lab Micro Cloud in 5 Steps
 
-<img alt="Architecture Overview" src="./img/architecture-overview.png" width="500" />
-<!-- 
+<img alt="Architecture Overview" src="./img/architecture-overview.png" width="600" />
 
-Options: 
-- Virtual machines or Physical devices (RPis)
-- Juju or not Juju
-- Application 
+<!-- ### 1,2,3... 4 nodes -->
+<!-- ToDo: section about 3 or 4 nodes? 3 for HA, >4 for resilient HA. 3 to limit power usage. -->
 
- -->
+### Checkpoint 0
 
 To make it easier to follow, we split this tutorial into five steps with clear goals.
 At the end of each step, a checkpoint will help you understand what is the outcome.
@@ -111,47 +114,95 @@ If you can't get to the checkpoint, please reach out for help to the staff or [o
 
 _Expected duration: 5mn_
 
-<!-- ToDo: refactor the big blocks of text -->
-
 > In a usual micro cloud setup, this step - bare metal provisioning - would be fully automated. [Metal as a Service (MAAS)](https://maas.io/) can provision several to hundreds of physical servers and micro clouds spread over various locations. MAAS provides a way to flexibly deploy, manage, and maintain operating system loads on physical servers. It keeps track of all servers and their configurations available in the micro cloud. It is the base layer of the micro cloud stack.
 
 > In this virtual and one-site configuration, we won't be using MAAS. As micro clouds are fully modular, this will allow us to focus on the virtualisation and K8s layers. I invite you to [read more about MAAS](https://maas.io/tutorials) to automate your bare metal provisioning in further micro cloud deployments!
 
-This first step guides you through the provisioning of four Ubuntu machines using Multipass. The four virtual machines will emulate four physical nodes - let them be Raspberry Pis or any other small edge hardware.
+This first step guides you through the provisioning of three Ubuntu machines using Multipass. The three virtual machines will emulate three physical nodes - let them be Raspberry Pis or any other small edge hardware. For a more resilient configuration, you might want to consider adding a fourth more node... it's as simple as repeating everything one more time!
+<!-- ToDo: backlink to 1,2,3,4 section -->
 
 ```sh
 # Let's use bash to loop over the creation of four Ubuntu machines using Multipass
-$ for i in {1..4}; do multipass launch --name node$i --mem 4G --disk 10G; done;
-Launched: node1                                                                 
-Launched: node2                                                                 
-Launched: node3                                                                 
-Launched: node4
+$ for i in {1..3}; do multipass launch --name node$i --mem 8G --disk 10G --cpus 4; done;
+Launched: node1
+Launched: node2
+Launched: node3
 
 $ multipass list
 Name                    State             IPv4             Image
 node1                   Running           192.168.64.32    Ubuntu 20.04 LTS
 node2                   Running           192.168.64.33    Ubuntu 20.04 LTS
 node3                   Running           192.168.64.34    Ubuntu 20.04 LTS
-node4                   Running           192.168.64.35    Ubuntu 20.04 LTS
 
 $ multipass shell node1
-ubuntu@node1:~$ # That's it! We now have four Ubuntu identical machines ready-to-go
+ubuntu@node1:~$ # That's it! We now have three Ubuntu machines ready-to-go
 ```
 
 If you are using Raspberry Pis instead, you can [follow this tutorial to install the latest Ubuntu Server](https://ubuntu.com/tutorials/how-to-install-ubuntu-on-your-raspberry-pi#1-overview). I recommend using RPi 4+ 8GB, or above. (For stable deployments, I recommend you consider [the USB boot option](https://ubuntu.com/tutorials/how-to-install-ubuntu-desktop-on-raspberry-pi-4#4-optional-usb-boot) from an SSD instead of the SD card - from Ubuntu 20.10.)
 
-> **Checkpoint #1: Four Ubuntu machines on the same network.**
+> **Checkpoint #1: Three or four Ubuntu machines on the same network.**
 
-<img alt="Four Ubuntu machines on the same network." src="./img/checkpoint-01.png" width="500" />
+<!-- ToDo: update diagram with 3 nodes -->
+<img alt="Four Ubuntu machines on the same network." src="./img/checkpoint-01.png" width="600" />
 
-### #2 Cluster the machines with LXD: your first cloud!
+### #2 Register for model-driven operations
+
+_Expected duration: 10mn_
+
+#### What are Model-Driven Operations?
+
+"[Model-Driven Operations](https://juju.is/model-driven-operations-manifesto), say what?" The concept is relatively easy yet extremely powerful. Imagine we were discussing over the phone, and you suddenly wanted me to draw you a sheep; you would have two options:
+- Guide me, step by step, trying to be as specific as possible - "draw four small vertical lines, now draw a circle on top..."
+- Or rely on our shared knowledge of concepts and simply ask, "can you draw me a sheep, please."
+
+I promise you; the first option won't give you anything even close to a sheep... and it will take _a lot of time_. And if someone else was listening to our conversation and trying to follow the drawing instructions, I am sure theirs wouldn't look anything like mine... nor as a sheep.
+
+<img alt="Better sheep with Model Driven Operations." src="./img/sheeps.jpg" width="400" />
+
+(Ok, I'm not good at drawings... but you can agree the result is still better when relying on shared concepts! :) )
+
+Now imagine I am a server, and there are thousands of us with slightly different configurations (different cloud, platform, architecture...). Wouldn't it be great if you could just teach us what a database is? And teach us how it relates to other applications to provide persistent storage? That's what Model Driven Operations are about!    
+
+With Charmed Operators, you can package concepts and operational knowledge. With Juju, you can apply this knowledge with declarative queries, politely asking for what you need. "Please Juju, deploy this and that. Also, please Juju relate this with that." And that's it; you have a web server deployed on multiple clouds with a database properly configured and related to your web application! If you're interested, there's a lot of exciting and fun reads [on Juju.is](https://juju.is/blog).
+
+<!-- ToDo: Add diagram from Jaas.ai -->
+
+<!-- ToDo: Add link to the Edge MDO blog entry on Ubuntu.com (TBD) -->
+<!-- ToDo: Add link to the Kubecon blogs (TBD) -->
+
+#### Register the bare nodes with Juju
+
+> You can decide to skip this step and [jump to the next section](#manually-deploy-lxd-cluster) if you're going for the manual installation instead of using Juju and Charmed Operators.
+
+We are going to need an additional controller machine to operate our physical nodes. This can be any machine that has network access to your micro cloud nodes. Let's simply launch a small VM with Multipass.
+```sh
+multipass launch --name juju --mem 2G --disk 5G --cpus 2
+```
+
+[Tutorial Step 2: Instructions to install Juju and register your micro cloud nodes](./step02-register-for-mdo/README.md#register-your-bare-metal-cloud-with-juju).
+
+```sh
+ubuntu@juju:~$ juju status
+Model    Controller    Cloud/Region  Version  SLA          Timestamp
+default  bare-default  bare/default  2.9.14   unsupported  16:58:36+02:00
+
+Machine  State    DNS            Inst id               Series  AZ  Message
+0        started  192.168.64.32  manual:192.168.64.32  focal       Manually provisioned machine
+1        started  192.168.64.33  manual:192.168.64.33  focal       Manually provisioned machine
+2        started  192.168.64.34  manual:192.168.64.34  focal       Manually provisioned machine
+```
+
+> **Checkpoint #2: Juju bare cloud with micro cloud nodes added as machines.**
+
+<!-- ToDo: update diagram with 3 bare nodes and Juju -->
+<img alt="LXD cloud registered as a Juju cloud." src="./img/checkpoint-02.png" width="600" />
+
+### #3 Cluster the machines with LXD: your first cloud!
 
 _Expected duration: 15mn_
 
-This section is the moment we get to build our first cloud capabilities. We will cluster the four physical machines together, abstracting them as a virtual layer capable of providing both Linux containers and virtual machines.
+This section is when we get to build our first cloud capabilities. We will cluster the physical (or, for the demo, virtual) machines together, abstracting them as a virtual layer capable of providing both Linux containers and virtual machines.
 We will then have virtual machines from almost any Linux distribution available no more than one command away. (If you're a more advanced user, [read more on how to get Windows VMs](https://github.com/lxc/distrobuilder#repack-windows-iso).)
-
-<!-- ToDo: Add option with the LXD charm and Juju -->
 
 Abstracting away from the bare metal layer is a practical step to building automated, scalable, and modular micro clouds. You may wonder why we don't just go directly with the K8s layer - and you could do it -, so here's what you get with the additional LXD virtualisation layer:
 
@@ -161,74 +212,95 @@ Abstracting away from the bare metal layer is a practical step to building autom
 - High availability: LXD adds a layer of resiliency to failures and outages with built-in high availability from 3 nodes and above;
 - Simplified operations: the more you can abstract, the more you will standardise and automate remote management operations.
 
-<!-- ToDo: Options 1 & 2, with and without automation - once LXD charm is ready -->
+#### Build your private LXD cloud in one command with Juju
 
-[Tutorial Step 2: Instructions to build your edge cloud using LXD.](./step02-lxd-cloud/README.md#initiate-the-first-node)
+Make sure `juju status` gives you a similar output to the pasted example [at the previous checkpoint](#register-the-bare-nodes-with-juju); otherwise you might need to update the command with the correct machine IDs (here: 0,1,2).
 
-> **Checkpoint #2: Four-node LXD cluster ready to operate.**
-
+All the commands in this section are executed from the Juju controller machine:
 ```sh
-ubuntu@node4:~$ lxc cluster list
-+-------+----------------------------+----------+--------+-------------------+--------------+
-| NAME  |            URL             | DATABASE | STATE  |      MESSAGE      | ARCHITECTURE |
-+-------+----------------------------+----------+--------+-------------------+--------------+
-| node1 | https://192.168.64.32:8443 | YES      | ONLINE | Fully operational | x86_64       |
-+-------+----------------------------+----------+--------+-------------------+--------------+
-| node2 | https://192.168.64.33:8443 | YES      | ONLINE | Fully operational | x86_64       |
-+-------+----------------------------+----------+--------+-------------------+--------------+
-| node3 | https://192.168.64.34:8443 | YES      | ONLINE | Fully operational | x86_64       |
-+-------+----------------------------+----------+--------+-------------------+--------------+
-| node4 | https://192.168.64.35:8443 | YES      | ONLINE | Fully operational | x86_64       |
-+-------+----------------------------+----------+--------+-------------------+--------------+
+multipass shell juju
 ```
 
-<img alt="Four-node LXD cluster ready to operate." src="./img/checkpoint-02.png" width="500" />
+(ToDo: remove and replace with official charm.)
+```sh
+git clone -b cluster https://github.com/simondeziel/charm-lxd.git
+sudo snap install charmcraft --classic
+sudo lxd init --auto
+cd ./charm-lxd
+charmcraft build
+```
 
-<!-- ToDo: Might need to move section 3 before 2, and use Juju to bootstrap LXD cluster -->
-### #3 Register your cloud for model-driven operations
+One command to deploy and configure your LXD cluster with Juju:
+```sh
+ubuntu@juju:~$ juju deploy ./lxd_ubuntu-20.04.charm lxd -n 3 --to 0,1,2 --config mode=cluster
+```
 
-_Expected duration: 8mn_
+Grab a cocktail 🍹, and watch Juju configure things for you:
+```sh
+ubuntu@juju:~$ watch -cn0.5 juju status --color
+Model    Controller    Cloud/Region  Version  SLA          Timestamp
+default  bare-default  bare/default  2.9.14   unsupported  18:54:40+02:00
 
-"[Model-Driven Operations](https://juju.is/model-driven-operations-manifesto), say what?" The concept is relatively easy yet extremely powerful. Imagine we were discussing over the phone, and you suddenly wanted me to draw you a sheep; you would have two options:
-- Guide me, step by step, trying to be as specific as possible - "draw four small vertical lines, now draw a circle on top..."
-- Or rely on my knowledge of concepts and simply ask, "can you draw me a sheep, please."
+App  Version  Status  Scale  Charm  Store  Channel  Rev  OS      Message
+lxd           active      3  lxd    local             0  ubuntu  
 
-I promise you; the first option won't give you anything even close to a sheep... and it will take us _a lot of time_.
+Unit    Workload  Agent  Machine  Public address  Ports  Message
+lxd/0*  active    idle   0        192.168.64.33          
+lxd/1   active    idle   1        192.168.64.34          
+lxd/2   active    idle   2        192.168.64.32          
 
-<img alt="Better sheep with Model Driven Operations." src="./img/sheeps.jpg" width="400" />
+Machine  State    DNS            Inst id               Series  AZ  Message
+0        started  192.168.64.33  manual:192.168.64.33  focal       Manually provisioned machine
+1        started  192.168.64.34  manual:192.168.64.34  focal       Manually provisioned machine
+2        started  192.168.64.32  manual:192.168.64.32  focal       Manually provisioned machine
+```
 
-(Ok, I'm not good at drawings... but still better when relying on shared concepts! :) )
+#### Register your LXD cloud with Juju
 
-Now imagine I am a server, and there are thousands of us with slightly different configurations (different cloud, platform, architecture...). Wouldn't it be great if you could just teach me what a database is? And teach me how it relates to other applications to provide persistent storage? That's Model Driven Operations!    
-With Charmed Operators, you can package concepts and operational knowledge. With Juju, you can apply this knowledge with declarative queries, politely asking for what you need. "Please Juju, deploy this and that. Also, please Juju relate this with that." And that's it; you have a web server deployed on multiple clouds with a database properly configured and related to your web application! If you're interested, there's a lot of exciting and fun reads [on Juju.is](https://juju.is/blog).
+Now that we have a LXD micro cloud, we want to be able to operate it from Juju with Charmed Operators. For that, we will need to register it:
 
-<!-- ToDo: Add link to the Edge MDO blog entry on Ubuntu.com (TBD) -->
-<!-- ToDo: Add link to the Kubecon blogs (TBD) -->
-
-> You can decide to skip this step and [jump to the next section](#manually-deploy-a-microk8s-cluster) if you're going for the manual installation instead of using Juju and Charmed Operators.
-
-[Tutorial Step 3: Instructions to install Juju and register your LXD micro cloud.](./step03-juju-bootstrap/README.md#install-juju).
-
-> **Checkpoint #3: LXD cloud can be controlled remotely.**
+[Tutorial Step 3, part2: Register your LXD micro cloud with Juju.](./step03-juju-bootstrap/README.md#model-driven-operated-micro-cloud-with-juju).
 
 ```
-ubuntu@node1:~$ juju status
+ubuntu@juju:~$ juju status
 Model    Controller          Cloud/Region        Version  SLA          Timestamp
 default  microcloud-default  microcloud/default  2.9.12   unsupported  13:05:13+02:00
 
 Model "admin/default" is empty.
 ```
 
-<img alt="LXD cloud registered as a Juju cloud." src="./img/checkpoint-03.png" width="500" />
+#### Manually deploy LXD cluster
 
-### #4 Create on-demand MicroK8s clusters: a micro cloud dream
+If you want to see what is happening under the hood, you can manually configure LXD on each node and cluster them together. I recommend using the Juju option to save you some time and uncover the power of Charmed Operators, but you're also good to go with this option.
 
-<!-- 19h10 -->
-_Expected Duration: 20mn_
+[Tutorial Step 3: Instructions to build your edge cloud using LXD.](./step03-lxd-cloud/README.md#initiate-the-first-node)
 
-<!-- MicroK8s is a low-ops, minimal production Kubernetes, for devs, cloud, clusters, workstations, Edge and IoT.    
+> **Checkpoint #3: LXD cluster ready to operate.**
+
+```sh
+ubuntu@node1:~$ lxc cluster list
++-------+----------------------------+----------+--------+-------------------+
+| NAME  |            URL             | DATABASE | STATE  |      MESSAGE      |
++-------+----------------------------+----------+--------+-------------------+
+| node1 | https://192.168.64.32:8443 | YES      | ONLINE | Fully operational |
++-------+----------------------------+----------+--------+-------------------+
+| node2 | https://192.168.64.33:8443 | YES      | ONLINE | Fully operational |
++-------+----------------------------+----------+--------+-------------------+
+| node3 | https://192.168.64.34:8443 | YES      | ONLINE | Fully operational |
++-------+----------------------------+----------+--------+-------------------+
+```
+
+<!-- ToDo: update diagram with 3 nodes and Juju -->
+<img alt="LXD cloud registered as a Juju cloud." src="./img/checkpoint-03.png" width="600" />
+
+### #4 Create on-demand MicroK8s clusters
+
+_Expected Duration: 25mn_
+
+MicroK8s is a low-ops, minimal production Kubernetes, for devs, cloud, clusters, workstations, Edge and IoT.    
 In a micro cloud architecture, Kubernetes APIs make management of edge clusters easier to integrate with existing infrastructure and centralised control planes. MicroK8s is lightweight and yet features the K8s APIs, none added or removed. MicroK8s ships with with sensible defaults that ‘just work’. And from 3 nodes, MicroK8s automatically supports an highly-available configuration.
 
+<!-- 
 #### Deploy on-demand kubernetes clusters with Juju
 
 Currently, there is no MicroK8s charm on [CharmHub](https://charmhub.io/), the Store for Charmed Operators. However, there is a version contributed [by @pjdc](https://launchpad.net/~pjdc/+git/charm-microk8s) a community member on Launchpad. It's just a matter of time until we get an official one!
@@ -287,38 +359,47 @@ Machine  State    DNS          Inst id        Series  AZ  Message
 
 If you want to see what is happening under the hood, you can manually start LXD containers and set up MicroK8s. I would recommend using [the Juju option](#deploy-on-demand-kubernetes-clusters-with-juju) to save some time and uncover the power of Charmed Operators, but you're also good to go with this option. Installing MicroK8s is only the matter of one "snap install microk8s" command and a "microk8s add/join" per machine to cluster your nodes together. -->
 
-[Tutorial Step 4 (bis): Instructions to manually create MicroK8s clusters.](./step04-microk8s-clusters/README.md#manual-installation)
+[Tutorial Step 4: Instructions to manually create MicroK8s clusters.](./step04-microk8s-clusters/README.md#manual-installation)
 
 
 > **Checkpoint #4: MicroK8s cluster on LXD, up and running.**
 
-<!-- ```sh
-# ToDo: Paste status output with HA
-``` -->
+```sh
+ubuntu@node1:~$ lxc exec worker1 -- microk8s status
+microk8s is running
+high-availability: yes
+  datastore master nodes: 240.64.34.187:19001 240.64.33.180:19001 240.64.32.162:19001
+  datastore standby nodes: none
+```
 
-<img alt="" src="./img/checkpoint-04.png" width="500" />
+<img alt="" src="./img/checkpoint-04.png" width="600" />
+
 
 ### #5 Run cloud-native applications at the edge with micro clouds
 
 Your micro cloud is now ready, registered, and you know how to create lightweight MicroK8s clusters on demand. The next steps are optional, feel free to pick what's the most interesting to you. The goal there is to get you productive with fancy applications running on your homelab micro cloud.
 
-<img alt="" src="./img/checkpoint-05.png" width="500" />
+<img alt="" src="./img/checkpoint-05.png" width="600" />
 
 #### Register your MicroK8s edge clusters with Portainer
 
-_Expected duration: Xmn_
+_Expected duration: 10mn_
+
+<!-- TODO -->
 
 #### Register your MicroK8s edge clusters with Juju
 
-_Expected duration: Xmn_
+_Expected duration: 10mn_
+
+<!-- TODO -->
 
 #### Deploy applications to your micro cloud with Juju and Charms
 
-_Expected duration: Xmn_
+_Expected duration: 10mn_
+
+<!-- TODO -->
 
 <!-- Bonus -->
-
-> **Checkpoint #4: Application deployed on *production* MicroK8s.**
 
 ## Authors/Reviewers
 
