@@ -142,7 +142,6 @@ If you are using Raspberry Pis instead, you can [follow this tutorial to install
 
 > **Checkpoint #1: Three or four Ubuntu machines on the same network.**
 
-<!-- ToDo: update diagram with 3 nodes -->
 <img alt="Four Ubuntu machines on the same network." src="./img/checkpoint-01.png" width="600" />
 
 ### #2 Register for model-driven operations
@@ -194,7 +193,6 @@ Machine  State    DNS            Inst id               Series  AZ  Message
 
 > **Checkpoint #2: Juju bare cloud with micro cloud nodes added as machines.**
 
-<!-- ToDo: update diagram with 3 bare nodes and Juju -->
 <img alt="LXD cloud registered as a Juju cloud." src="./img/checkpoint-02.png" width="600" />
 
 ### #3 Cluster the machines with LXD: your first cloud!
@@ -290,7 +288,6 @@ ubuntu@node1:~$ lxc cluster list
 +-------+----------------------------+----------+--------+-------------------+
 ```
 
-<!-- ToDo: update diagram with 3 nodes and Juju -->
 <img alt="LXD cloud registered as a Juju cloud." src="./img/checkpoint-03.png" width="600" />
 
 ### #4 Create on-demand MicroK8s clusters
