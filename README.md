@@ -388,7 +388,19 @@ Your micro cloud is now ready, registered, and you know how to create lightweigh
 
 _Expected duration: 10mn_
 
-<!-- TODO -->
+Portainer allows you to “build, manage and deploy containers in your Kubernetes environment quickly and easily. No more CLI, no more YAML, no more Kubernetes manifests. Just simple, fast, K8s configuration in a graphical UI, built on a trusted open source platform.”
+
+The steps for [getting started with Portainer on MicroK8s](https://www.portainer.io/blog/how-to-deploy-portainer-on-microk8s) are fairly easy:
+- Log into one of the nodes `multipass shell node1`
+- Enable the required addons `ubuntu@node1:~$ microk8s enable dns ha-cluster ingress metrics-server rbac storage`
+- Wait for MicroK8s to be ready `ubuntu@node1:~$ microk8s status --wait-ready`
+- **Enable the Portainer addon** `ubuntu@node1:~$ microk8s enable portainer`
+- Wait for MicroK8s to be ready again `ubuntu@node1:~$ microk8s status --wait-ready`
+- Check the IP address of `node1` and access the Portainer dashboard at `http://192.168.64.32:30777` from your machine
+
+Now, you as this is going to be an edge cluster, remotely managed, you probably want to register it to a central control place. With Portainer, this is super easy! Click [here and follow the instructions](https://docs.portainer.io/v/ce-2.9/admin/environments/add/edge#adding-an-edge-endpoint-to-portainer).
+
+If you're just trying this out and don't have a "central control plane", this is fine. You can create a new MicroK8s cluster that you will register from the Portainer dashboard that you just deployed, just for fun! Refer to [section 4](#4-create-on-demand-microk8s-clusters) on how to do that.
 
 #### Register your MicroK8s edge clusters with Juju
 
