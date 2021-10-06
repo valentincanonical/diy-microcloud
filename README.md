@@ -164,7 +164,9 @@ Now imagine I am a server, and there are thousands of us with slightly different
 
 With Charmed Operators, you can package concepts and operational knowledge. With Juju, you can apply this knowledge with declarative queries, politely asking for what you need. "Please Juju, deploy this and that. Also, please Juju relate this with that." And that's it; you have a web server deployed on multiple clouds with a database properly configured and related to your web application! If you're interested, there's a lot of exciting and fun reads [on Juju.is](https://juju.is/blog).
 
-<!-- ToDo: Add diagram from Jaas.ai -->
+<img alt="Web Infrastructure deployed with Juju and Charmed Operators." src="./img/juju-web-bundle.png" width="400" />
+
+Check out [this great example](https://jaas.ai/web-infrastructure-in-a-box/bundle/10) of Charmed Operators and relations!
 
 <!-- ToDo: Add link to the Edge MDO blog entry on Ubuntu.com (TBD) -->
 <!-- ToDo: Add link to the Kubecon blogs (TBD) -->
