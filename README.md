@@ -91,6 +91,8 @@ Click to expand the instructions.
 
 <!-- ToDo: test on a cloud virtual machine, and link to a tutorial. -->
 
+<!-- TODO: validate doable in 60mn -->
+
 <!-- </details> -->
 
 
@@ -221,7 +223,8 @@ All the commands in this section are executed from the Juju controller machine:
 multipass shell juju
 ```
 
-(ToDo: remove and replace with official charm.)
+(TODO: remove and replace with official charm.)
+
 ```sh
 git clone -b cluster https://github.com/simondeziel/charm-lxd.git
 sudo snap install charmcraft --classic
@@ -230,12 +233,12 @@ cd ./charm-lxd
 charmcraft build
 ```
 
-One command to deploy and configure your LXD cluster with Juju:
+One command to deploy and configure your LXD cluster with Juju and the [LXD machine charm](https://charmhub.io/lxd):
 ```sh
 ubuntu@juju:~$ juju deploy ./lxd_ubuntu-20.04.charm lxd -n 3 --to 0,1,2 --config mode=cluster
 ```
 
-Grab a cocktail 🍹, and watch Juju configure things for you:
+Grab a cocktail 🍹 while you watch Juju deploy and configure everything for you:
 ```sh
 ubuntu@juju:~$ watch -cn0.5 juju status --color
 Model    Controller    Cloud/Region  Version  SLA          Timestamp
@@ -276,7 +279,8 @@ ubuntu@node1:~$ lxc cluster list
 +-------+----------------------------+----------+--------+-------------------+
 ```
 
-<img alt="LXD cloud registered as a Juju cloud." src="./img/checkpoint-03.png" width="600" />
+<img alt="LXD cloud" src="./img/checkpoint-03-no-juju.png" width="600" />
+<!-- <img alt="LXD cloud" src="./img/checkpoint-03.png" width="600" /> -->
 
 ### #4 Create on-demand MicroK8s clusters
 
@@ -368,14 +372,14 @@ If you want to see what is happening under the hood, you can manually start LXD 
 > **Checkpoint #4: MicroK8s cluster on LXD, up and running.**
 
 ```sh
-ubuntu@node1:~$ lxc exec worker1 -- microk8s status
+root@worker1:~$ microk8s status
 microk8s is running
 high-availability: yes
   datastore master nodes: 240.64.34.187:19001 240.64.33.180:19001 240.64.32.162:19001
   datastore standby nodes: none
 ```
 
-<img alt="" src="./img/checkpoint-04.png" width="600" />
+<img alt="MicroK8s cluster on LXD" src="./img/checkpoint-04.png" width="600" />
 
 
 ### #5 Run cloud-native applications at the edge with micro clouds
@@ -412,13 +416,13 @@ _Expected duration: 10mn_
 
 _Expected duration: 10mn_
 
+You first need to register your MicroK8s edge cluster with Juju. Click [here to scroll up](#register-your-microk8s-edge-clusters-with-juju).
 <!-- TODO -->
-
-<!-- Bonus -->
 
 ## Authors/Reviewers
 
 - Valentin Viennot, Product Manager, Canonical (Twitter: [@ValentinViennot](https://twitter.com/valentinviennot))
+<!-- TODO: add Pedro?  -->
 
 <!-- ToDo: get relevant reviews from the different product teams involved. -->
 
