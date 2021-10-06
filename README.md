@@ -255,20 +255,6 @@ Machine  State    DNS            Inst id               Series  AZ  Message
 2        started  192.168.64.32  manual:192.168.64.32  focal       Manually provisioned machine
 ```
 
-#### Register your LXD cloud with Juju
-
-Now that we have a LXD micro cloud, we want to be able to operate it from Juju with Charmed Operators. For that, we will need to register it:
-
-[Tutorial Step 3, part2: Register your LXD micro cloud with Juju.](./step03-juju-bootstrap/README.md#model-driven-operated-micro-cloud-with-juju).
-
-```
-ubuntu@juju:~$ juju status
-Model    Controller          Cloud/Region        Version  SLA          Timestamp
-default  microcloud-default  microcloud/default  2.9.12   unsupported  13:05:13+02:00
-
-Model "admin/default" is empty.
-```
-
 #### Manually deploy LXD cluster
 
 If you want to see what is happening under the hood, you can manually configure LXD on each node and cluster them together. I recommend using the Juju option to save you some time and uncover the power of Charmed Operators, but you're also good to go with this option.
@@ -299,7 +285,25 @@ _Expected Duration: 25mn_
 MicroK8s is a low-ops, minimal production Kubernetes, for devs, cloud, clusters, workstations, Edge and IoT.    
 In a micro cloud architecture, Kubernetes APIs make management of edge clusters easier to integrate with existing infrastructure and centralised control planes. MicroK8s is lightweight and yet features the K8s APIs, none added or removed. MicroK8s ships with with sensible defaults that ‘just work’. And from 3 nodes, MicroK8s automatically supports an highly-available configuration.
 
+<!-- TODO: prebuild charm for AMD64 and ARM-Rpi? -->
+
 <!-- 
+#### Register your LXD cloud with Juju
+
+<img alt="LXD cloud" src="./img/checkpoint-03.png" width="600" />
+
+Now that we have a LXD micro cloud, we want to be able to operate it from Juju with Charmed Operators. For that, we will need to register it:
+
+[Tutorial Step 3, part2: Register your LXD micro cloud with Juju](./step03-juju-bootstrap/README.md#model-driven-operated-micro-cloud-with-juju).
+
+```
+ubuntu@juju:~$ juju status
+Model    Controller          Cloud/Region        Version  SLA          Timestamp
+default  microcloud-default  microcloud/default  2.9.12   unsupported  13:05:13+02:00
+
+Model "admin/default" is empty.
+```
+
 #### Deploy on-demand kubernetes clusters with Juju
 
 Currently, there is no MicroK8s charm on [CharmHub](https://charmhub.io/), the Store for Charmed Operators. However, there is a version contributed [by @pjdc](https://launchpad.net/~pjdc/+git/charm-microk8s) a community member on Launchpad. It's just a matter of time until we get an official one!
