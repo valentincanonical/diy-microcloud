@@ -47,9 +47,9 @@ Table of Contents
 > Nonetheless, you will find secondary paths and alternative options all along, including instructions to use a cluster of Raspberry Pis.
 > The following requirements apply if you're willing to follow the primary path, using virtualisation to emulate multiple small devices.
 
-- 32GB RAM recommended (16GB min required);
-- CPU with at least 4 cores;
-- Min 50GB of storage left;
+- 16GB RAM recommended (8GB min required);
+- min 4-core CPU;
+- min 50GB of disk storage left;
 - [Multipass installed](https://multipass.run/) for your platform.
 
 Before attending, please make sure you can use [Multipass](https://multipass.run/). The following commands should run without any specific configuration:
