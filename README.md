@@ -223,7 +223,12 @@ All the commands in this section are executed from the Juju controller machine:
 multipass shell juju
 ```
 
-(TODO: remove and replace with official charm.)
+<!-- TODO: remove and replace with official charm or precompile more platforms. -->
+
+```
+ubuntu@juju:~$ wget https://raw.githubusercontent.com/valentincanonical/diy-microcloud/main/precompiled/lxd_ubuntu-20.04-amd64.charm -O lxd_ubuntu-20.04.charm
+```
+or 
 
 ```sh
 git clone -b cluster https://github.com/simondeziel/charm-lxd.git
