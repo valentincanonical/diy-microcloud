@@ -38,14 +38,16 @@ We'll go with the reverse proxy option as it doesn't depend on your host configu
 
 ```sh
 ubuntu@node1:~$ sudo apt update && sudo apt install nginx
-ubuntu@node1:~$ cat > /etc/nginx/sites-enabled/portainer.conf <<EOF
+ubuntu@node1:~$ IP_MICROK8S_CLUSTER=<REPLACE-WITH-LXD-MACHINE-GET-WITH-LXC-LS>
+ubuntu@node1:~$ cat > /tmp/portainer.conf <<EOF
 server { 
   listen 30777;
-  location / { 
-          proxy_pass http://<REPLACE-WITH-LXD-MACHINE-GET-WITH-LXC-LS>:30777; 
+  location / {
+          proxy_pass http://$IP_MICROK8S_CLUSTER:30777;
   }
 }
 EOF
+ubuntu@node1:~$ sudo mv /tmp/portainer.conf /etc/nginx/sites-enabled/
 ubuntu@node1:~$ sudo systemctl restart nginx
 ```
 
