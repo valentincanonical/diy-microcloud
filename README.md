@@ -11,9 +11,6 @@ TODO: update with final LXD charm once ready, or distribute private precompiled 
 - Timeouts
 TODO: investigate with the MicroK8s team, shouldn’t be happening
 
-- At the end of the workshop, the machine isn’t left in a clean state
-TODO: document the “how to clean your machine” step 
-
 TODO: more drawings and more on the outcome
 -->
 
@@ -55,7 +52,7 @@ Table of Contents
          * [Register your MicroK8s edge clusters with Portainer](./step-05-micro-cloud-native.md#register-your-microk8s-edge-clusters-with-portainer)
          * [Register your MicroK8s edge clusters with Juju](./step-05-micro-cloud-native.md#register-your-microk8s-edge-clusters-with-juju)
          * [Deploy applications to your micro cloud with Juju and Charms](./step-05-micro-cloud-native.md#deploy-applications-to-your-micro-cloud-with-juju-and-charms)
-   * [Cleaning behind yourself](./step-05-micro-cloud-native.md#cleaning-behind-yourself)
+   * [Cleaning behind: how to remove leftovers from your machine](./step-05-micro-cloud-native.md#cleaning-behind-yourself)
    * [Authors/Reviewers](./step-05-micro-cloud-native.md#authorsreviewers)
 
 <p align="center">
@@ -71,7 +68,10 @@ Table of Contents
 - 16GB RAM recommended (8GB min required);
 - min 4-core CPU;
 - min 50GB of disk storage left;
-- [Multipass installed](https://multipass.run/) for your platform.
+- [Multipass installed](https://multipass.run/) for your platform (stick to the default configuration).
+
+> It has been reported that VPNs (OpenVPN, AnyConnect...) might cause DNS issues.    
+> If you have the option to disable it, please do. Otherwise, you can try [this workaround](https://github.com/canonical/multipass/issues/495#issuecomment-448461250).
 
 Before attending the session, please make sure you can use [Multipass](https://multipass.run/).
 
