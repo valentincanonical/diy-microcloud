@@ -13,12 +13,43 @@ _Expected duration: 10mn_
 Portainer allows you to “build, manage and deploy containers in your Kubernetes environment quickly and easily. No more CLI, no more YAML, no more Kubernetes manifests. Just simple, fast, K8s configuration in a graphical UI, built on a trusted open source platform.”
 
 The steps for [getting started with Portainer on MicroK8s](https://www.portainer.io/blog/how-to-deploy-portainer-on-microk8s) are fairly easy:
-- Log into one of the nodes `multipass shell node1`
-- Enable the required addons `ubuntu@node1:~$ microk8s enable dns ha-cluster ingress metrics-server rbac storage`
-- Wait for MicroK8s to be ready `ubuntu@node1:~$ microk8s status --wait-ready`
-- **Enable the Portainer addon** `ubuntu@node1:~$ microk8s enable portainer`
-- Wait for MicroK8s to be ready again `ubuntu@node1:~$ microk8s status --wait-ready`
-- Check the IP address of `node1` and access the Portainer dashboard at `http://192.168.64.32:30777` from your machine
+
+```sh
+# Log into one of the nodes
+$ multipass shell node1
+
+# Enable the required addons
+ubuntu@node1:~$ microk8s enable dns ha-cluster ingress metrics-server rbac storage
+
+# **Enable the Portainer addon**
+ubuntu@node1:~$ microk8s enable portainer
+
+# Wait for MicroK8s to be ready
+ubuntu@node1:~$ microk8s status --wait-ready
+```
+
+Last step before accessing your Portainer dashboard: route the traffic from your machine to inside your micro cloud cluster.
+
+You can either:
+- A/ configure a route on your machine `ip route add <lxd-cluster-subnet> via <node1-ip>`
+- B/ configure a reverse proxy on your micro cloud
+
+We'll go with the reverse proxy option as it doesn't depend on your host configuration:
+
+```sh
+ubuntu@node1:~$ sudo apt update && sudo apt install nginx
+ubuntu@node1:~$ cat > /etc/nginx/sites-enabled/portainer.conf <<EOF
+server { 
+  listen 30777;
+  location / { 
+          proxy_pass http://<REPLACE-WITH-LXD-MACHINE-GET-WITH-LXC-LS>:30777; 
+  }
+}
+EOF
+ubuntu@node1:~$ sudo systemctl restart nginx
+```
+
+- Check the IP address of `node1` and access the Portainer dashboard at `http://<IP-address-node1>:30777` from your machine
 
 Now, you as this is going to be an edge cluster, remotely managed, you probably want to register it to a central control place. With Portainer, this is super easy! Click [here and follow the instructions](https://docs.portainer.io/v/ce-2.9/admin/environments/add/edge#adding-an-edge-endpoint-to-portainer).
 
