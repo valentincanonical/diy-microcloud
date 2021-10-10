@@ -61,7 +61,7 @@ If you're just trying this out and don't have a "central control plane", this is
 
 _Expected duration: 10mn_
 
-TODO
+TODO TODO TODO
 
 ## Deploy applications to your micro cloud with Juju and Charms
 
@@ -69,11 +69,11 @@ _Expected duration: 10mn_
 
 You first need to register your MicroK8s edge cluster with Juju. Click [here to scroll up](#register-your-microk8s-edge-clusters-with-juju).
 
-TODO
+TODO TODO TODO
 
 -->
 
-# Cleaning behind yourself
+# How to clean your machine
 
 If you used the Multipass option, it's super easy to clean things behind yourself once you're done with the tutorial:
 

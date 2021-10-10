@@ -8,10 +8,16 @@
 
 Read more on [the microk8s.io website](https://microk8s.io/docs/lxd).
 
-### Pre-req
-#### Configuring the MicroK8s LXD profile
+### Prepare the LXD worker nodes
+
+We are going to install MicroK8s on top of our micro cloud, and therefore will need a few LXD machines to use as worker nodes.
+
+#### Configure the MicroK8s LXD profile
 
 ```sh
+#!/bin/bash
+$ multipass shell node1
+
 # Create a new LXD profile for MicroK8s
 ubuntu@node1:~$ lxc profile create microk8s
 Profile microk8s created
@@ -27,9 +33,8 @@ ubuntu@node1:~$ cat microk8s.profile | lxc profile edit microk8s
 ubuntu@node1:~$ rm microk8s.profile
 ```
 
-#### Launching the worker/master nodes machines
+#### Launch the worker nodes
 
-<!-- ToDo: default to command using Juju (in a new model) to create machines -->
 ```sh
 #!/bin/bash
 
@@ -49,8 +54,13 @@ ubuntu@node1:~$ lxc ls
 +---------+---------+---------------------+-------+-----------+-----------+
 | worker3 | RUNNING | 10.204.8.170 (eth0) |       | CONTAINER | 0         |
 +---------+---------+---------------------+-------+-----------+-----------+
+```
 
-# One more LXD specific configuration for the AppArmor profiles, as per the docs on https://microk8s.io/docs/lxd
+One more LXD specific configuration for the AppArmor profile, as per the docs on https://microk8s.io/docs/lxd:
+
+```sh
+#!/bin/bash
+
 # Create 'rc.local' file on your node machine with the following content
 ubuntu@node1:~$ cat > rc.local <<EOF
 #!/bin/bash
@@ -64,10 +74,10 @@ EOF
 ubuntu@node1:~$ for i in {1..3}; do lxc file push rc.local worker$i/etc/rc.local; lxc exec worker$i -- chmod +x /etc/rc.local; done;
 ```
 
-### Creating the first MicroK8s node
+### Create the first MicroK8s instance
 
 ```sh
-# Log in to the first worker node, and run the commands to initiate MicroK8s
+# Log in to the first worker node, and run the command to install MicroK8s
 ubuntu@node1:~$ lxc exec worker1 -- snap install microk8s --classic
 microk8s (1.21/stable) v1.21.5 from Canonical✓ installed
 
@@ -75,17 +85,18 @@ microk8s (1.21/stable) v1.21.5 from Canonical✓ installed
 ubuntu@node1:~$ lxc exec worker1 -- microk8s status
 microk8s is not running. Use microk8s inspect for a deeper inspection.
 
-# FOR THE MULTIPASS OPTION ONLY - disable some kernal calls as a workaround to
-# the too many virtualisation layers --> vm --> lxd --> snap --> kubernetes
+# FOR THE MULTIPASS OPTION ONLY ---
+# disable some kernal calls as a workaround to the too many virtualisation layers (--> vm --> lxd --> snap --> kubernetes)
 ubuntu@node1:~$ lxc exec worker1 -- bash -c 'echo "--conntrack-max-per-core=0" >> /var/snap/microk8s/current/args/kube-proxy && 
 systemctl restart snap.microk8s.daemon-kubelite'
+# ---
 
-# We will need dns and storage modules for clustering and further deployments
+# We will need the dns and storage modules for clustering, and further application deployments
 ubuntu@node1:~$ lxc exec worker1 -- microk8s enable dns storage
 DNS is enabled
 Storage will be available soon
 
-# MicroK8s might take up to 5mn to get up and ready...
+# MicroK8s might take up to 5mn to get up and ready... done!
 ubuntu@node1:~$ lxc exec worker1 -- microk8s status --wait-ready
 microk8s is running
 high-availability: no
@@ -93,30 +104,45 @@ high-availability: no
   datastore standby nodes: none
 ```
 
-### Adding more worker nodes
+### Add more MicroK8s worker nodes
 
-Repeat the following commands for each MicroK8s worker node you cant to configure:
+Repeat the following commands for each MicroK8s worker node you want to configure.
+In these instructions, we are using 3 worker nodes to demonstrate the high-availability configuration of MicroK8s.
+
+> If you feel that your machine is already under pressure... or that you're a bit behind on timing:     
+> you can stick to a single-node MicroK8s (and jump [to the next step](./step-05-micro-cloud-native.md#5-run-cloud-native-applications-at-the-edge-with-micro-clouds)).
+
 ```sh
 i=2
 lxc exec worker$i -- snap install microk8s --classic
 lxc exec worker$i -- bash -c 'echo "--conntrack-max-per-core=0" >> /var/snap/microk8s/current/args/kube-proxy && systemctl restart snap.microk8s.daemon-kubelite'
+# repeat for i=3...
 ```
 
 ### Cluster your MicroK8s nodes
 
+Now that you have deployed multiple MicroK8s instances, the next logical step is to cluster them together.
+Thanks to the micro cloud setup, it's trivial to organise them as you wish and have different kubernetes clusters running in parallel.
+
 ```sh
 # Run the add-node command from the worker1 machine and use it to join your second node
 ubuntu@node1:~$ lxc exec worker1 -- microk8s add-node
-ubuntu@node1:~$ lxc exec worker2 -- microk8s join <paste-token-here>
+  <copy-join-token>
+
+ubuntu@node1:~$ lxc exec worker2 -- microk8s join <paste-join-token-here>
 
 # Run the add-node command from the worker1 machine and use it to join your third node
 ubuntu@node1:~$ lxc exec worker1 -- microk8s add-node
+  <copy-join-token>
+
 ubuntu@node1:~$ lxc exec worker3 -- microk8s join <paste-token-here>
 
 # Let's wait for the MicroK8s cluster to be up and running...
-ubuntu@node1:~$ lxc exec worker1 -- microk8s status --wait-ready # this can take a few minutes
+ubuntu@node1:~$ lxc exec worker1 -- microk8s status --wait-ready
 
-# done!
+# This can take a few minutes to complete... done!
+# Note: some users experienced timeouts at this stage, don't panic and simply try it again...
+# your machine might be under pressure running three kubernetes instances in parallel!
 ```
 
 You can run some status commands to show around and make sure everything is up and ready:

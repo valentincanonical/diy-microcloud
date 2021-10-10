@@ -71,8 +71,6 @@ ubuntu@juju:~$ sudo snap install juju --classic
 You'll need SSH access from the Juju controller machine to your micro cloud nodes in order to operate them with Juju.
 Let's generate an SSH key pair on the "Juju" machine and add the public key as an authorized host to the micro cloud nodes.
 
-<!-- TODO: copy and paste output -->
-
 ```sh
 $ multipass shell juju
 # Generate a new SSH key pair (presse enter to accept all the default parameters)
@@ -100,6 +98,7 @@ Now that we have everything in place, let's create a Juju bare cloud to control 
 
 <!-- ToDo: trust the RSA key if not yet -->
 <!-- ToDo: explain the concept, what is happening behind the scenes, high level -->
+
 ```sh
 $ multipass shell juju
 # Make sure to write down the IP address of your Juju controller

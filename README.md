@@ -2,10 +2,7 @@
 
 <!-- 
 
-- Multipass multiple issues with VPN
-TODO: define the best workaround and document it in the workshop instructions
-
-LXD requires to build with charmcraft (very complex and useless)
+LXD requires to build with charmcraft (complex and useless)
 TODO: update with final LXD charm once ready, or distribute private precompiled charms
 
 - Timeouts
@@ -52,7 +49,7 @@ Table of Contents
          * [Register your MicroK8s edge clusters with Portainer](./step-05-micro-cloud-native.md#register-your-microk8s-edge-clusters-with-portainer)
          * [Register your MicroK8s edge clusters with Juju](./step-05-micro-cloud-native.md#register-your-microk8s-edge-clusters-with-juju)
          * [Deploy applications to your micro cloud with Juju and Charms](./step-05-micro-cloud-native.md#deploy-applications-to-your-micro-cloud-with-juju-and-charms)
-   * [Cleaning behind: how to remove leftovers from your machine](./step-05-micro-cloud-native.md#cleaning-behind-yourself)
+   * [Cleaning behind: how to remove leftovers from your machine](./step-05-micro-cloud-native.md#how-to-clean-your-machine)
    * [Authors/Reviewers](./step-05-micro-cloud-native.md#authorsreviewers)
 
 <p align="center">

@@ -20,32 +20,38 @@ Abstracting away from the bare metal layer is a practical step to building autom
 Thanks to Model Driven Operations, deploying and operating software is automated and repeatable; two key qualities for edge deployments.
 Here's how to use the [LXD Charmed Operator](https://github.com/canonical/charm-lxd) to deploy and configure your micro cloud LXD cluster in one command.
 
+<!-- TODO: remove section once official charm is available. -->
 ### Download the LXD Charm
-<!-- TODO: remove and replace with official charm or precompile more platforms and compile instructions collapsed. -->
-<!-- TODO: Use Launchpad farm to building multi architecture -->
 
+<!-- TODO: Use Launchpad farm to building multi architecture -->
 ```sh
 $ multipass shell juju
 
 # For ARM64 users
-TODO
+TODO: file for ARM64 users
 
 # For AMD64 users
 ubuntu@juju:~$ wget https://raw.githubusercontent.com/valentincanonical/diy-microcloud/main/precompiled/lxd_ubuntu-20.04-amd64.charm -O lxd_ubuntu-20.04.charm
 
 # For Rapsberry Pi ARM64 users
-TODO
+TODO file for Rpi users
 ```
-<!-- TODO: lxd charm does not work -->
-or, you can also compile it for your platform:
+<!-- TODO: lxd charm does not always work -->
+<details>
+    <summary>
+or, you can also compile it yourself for your platform (click to expand the instructions).
+    </summary>
 
 ```sh
-git clone -b cluster https://github.com/simondeziel/charm-lxd.git
-sudo snap install charmcraft --classic
-sudo lxd init --auto
-cd ./charm-lxd
-charmcraft build
+    git clone -b cluster https://github.com/simondeziel/charm-lxd.git
+    sudo snap install charmcraft --classic
+    sudo lxd init --auto
+    cd ./charm-lxd
+    charmcraft build
 ```
+
+</details>
+</br>
 
 ### Deploy the LXD Charm
 One command to deploy and configure your LXD cluster with Juju and the [LXD machine charm](https://charmhub.io/lxd):
