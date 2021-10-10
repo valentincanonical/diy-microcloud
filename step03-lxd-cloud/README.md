@@ -1,11 +1,10 @@
-# Build your LXD micro cloud!
+[< back to Step 3: Cluster the machines with LXD, your first cloud!](../step-03-lxd-cloud.md#3-cluster-the-machines-with-lxd-your-first-cloud)
 
-<!-- ## Option 1: Automated deployment using Juju and Charms
-## Option 2: Manual installation -->
+# Build your LXD micro cloud!
 
 _Expected duration: 15mn_
 
-### Initiate the first node
+## Initiate the first node
 
 ```sh
 # Log in to one of the nodes
@@ -26,7 +25,7 @@ Do you want to configure a new local storage pool? (yes/no) [default=yes]:
 Name of the storage backend to use (btrfs, dir, lvm, zfs) [default=zfs]: 
 Create a new ZFS pool? (yes/no) [default=yes]: 
 Would you like to use an existing empty block device (e.g. a disk or partition)? (yes/no) [default=no]: 
-# I secured more space than the default to make sure we have enough to experiment
+# We secured more space than the default to make sure we have enough to experiment
 Size in GB of the new loop device (1GB minimum) [default=5GB]: 7GB    
 Do you want to configure a new remote storage pool? (yes/no) [default=no]: 
 Would you like to connect to a MAAS server? (yes/no) [default=no]: 
@@ -47,7 +46,7 @@ To start your first instance, try: lxc launch ubuntu:18.04
 +-------+----------------------------+----------+--------+-------------------+--------------+
 ```
 
-### Join the other nodes to the LXD cluster
+## Join the other nodes to the LXD cluster
 
 ```sh
 # From one of the configured nodes, generate a token to simplify the clustering operation
@@ -149,3 +148,7 @@ Release:	20.04
 Codename:	focal
 
 ```
+
+---
+
+[Next step (4/5): Create on-demand MicroK8s clusters >](../step-04-microk8s-cluster.md#4-create-on-demand-microk8s-clusters)

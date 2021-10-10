@@ -1,3 +1,7 @@
+[< back to Step 4: Create on-demand MicroK8s clusters](../step-04-microk8s-cluster.md#4-create-on-demand-microk8s-clusters)
+
+<!-- TODO -->
+
 # On-demand Micro Kubernetes Clusters
 
 ## Manual Installation
@@ -27,6 +31,8 @@ ubuntu@node1:~$ rm microk8s.profile
 
 <!-- ToDo: default to command using Juju (in a new model) to create machines -->
 ```sh
+#!/bin/bash
+
 # Let's iterate to create three LXD containers as three worker/master nodes
 ubuntu@node1:~$ for i in {1..3}; do lxc launch -p default -p microk8s ubuntu:20.04 worker$i; done;
 Starting worker1
@@ -180,3 +186,7 @@ kube-system   replicaset.apps/coredns-7f9c69c78c                  1         1   
 kube-system   replicaset.apps/hostpath-provisioner-5c65fbdb4f     1         1         1       14m
 kube-system   replicaset.apps/calico-kube-controllers-f7868dd95   1         1         1       53m
 ```
+
+---
+
+[Next step (5/5): Run cloud-native applications at the edge with micro clouds >](../step-05-micro-cloud-native.md#5-run-cloud-native-applications-at-the-edge-with-micro-clouds)
