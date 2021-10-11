@@ -17,15 +17,17 @@ The steps for [getting started with Portainer on MicroK8s](https://www.portainer
 ```sh
 # Log into one of the nodes
 $ multipass shell node1
+# Log into one of the MicroK8s worker nodes
+$ lxc shell worker1
 
 # Enable the required addons
-ubuntu@node1:~$ microk8s enable dns ha-cluster ingress metrics-server rbac storage
+root@worker1:~$ microk8s enable dns ha-cluster ingress metrics-server rbac storage
 
 # **Enable the Portainer addon**
-ubuntu@node1:~$ microk8s enable portainer
+root@worker1:~$ microk8s enable portainer
 
 # Wait for MicroK8s to be ready
-ubuntu@node1:~$ microk8s status --wait-ready
+root@worker1:~$ microk8s status --wait-ready
 ```
 
 Last step before accessing your Portainer dashboard: route the traffic from your machine to inside your micro cloud cluster.
@@ -53,9 +55,9 @@ ubuntu@node1:~$ sudo systemctl restart nginx
 
 - Check the IP address of `node1` and access the Portainer dashboard at `http://<IP-address-node1>:30777` from your machine
 
-Now, you as this is going to be an edge cluster, remotely managed, you probably want to register it to a central control place. With Portainer, this is super easy! Click [here and follow the instructions](https://docs.portainer.io/v/ce-2.9/admin/environments/add/edge#adding-an-edge-endpoint-to-portainer).
+Now, as this is going to be an edge cluster, remotely managed, you probably want to register it to a central control place. With Portainer, this is super easy! Click [here and follow the instructions](https://documentation.portainer.io/v2.0/endpoints/edge/).
 
-If you're just trying this out and don't have a "central control plane", this is fine. You can create a new MicroK8s cluster that you will register from the Portainer dashboard that you just deployed, just for fun! Refer to [section 4](#4-create-on-demand-microk8s-clusters) on how to do that.
+If you're just trying this out and don't have a "central control plane", this is fine. You can create a new MicroK8s cluster that you will register from the Portainer dashboard that you just deployed, just for fun! Refer to [section 4](./step-04-microk8s-cluster.md#4-create-on-demand-microk8s-clusters) on how to do that.
 
 <!-- ## Register your MicroK8s edge clusters with Juju
 
@@ -111,7 +113,7 @@ Table of Content generated with [gh-md-toc](https://github.com/ekalinin/github-m
 
 ---
 
- Copyright 2021 Valentin Viennot for Canonical Ltd.
+ Copyright 2021 Canonical Ltd.
 
    [Licensed under the Apache License](./LICENSE), Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
