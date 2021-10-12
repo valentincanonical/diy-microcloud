@@ -44,7 +44,7 @@ multipass launch --name juju --mem 2G --disk 5G --cpus 2
 ```
 
 > If you're following the tutorial using Rapsberry Pis, you can operate this step directly from your host. Please adapt the commands.    
-> If you chose to use cloud machines, you can simply launch another one with the smallest requirements.
+> If you chose to use cloud machines, you should already have it ready. Otherwise, simply launch a new one with minimal configuration.
 
 You should now be in a situation with at least three virtual or physical machines dedicated as micro cloud nodes and a small controller machine for Juju.
 
@@ -65,6 +65,8 @@ The command to install [Juju](https://juju.is/) is pretty straightforward, and s
 $ multipass shell juju
 ubuntu@juju:~$ sudo snap install juju --classic
 ```
+
+<!-- TODO: refer back to the VPN issues doc -->
 
 ### Configure SSH access
 
@@ -87,6 +89,17 @@ If you're using Multipass, you can run this bash line from the host to add the p
 #!/bin/bash
 $ SSHJUJU="$(multipass exec juju -- cat /home/ubuntu/.ssh/id_rsa.pub)" && for i in {1..3}; do multipass exec node$i -- bash -c "echo $SSHJUJU >> /home/ubuntu/.ssh/authorized_keys"; done;
 ```
+<details>
+    <summary>
+Click here to expand the instruction for AWS cloud machines.
+    </summary>
+
+```sh
+  SSHJUJU="$(ssh juju.aws -- cat /home/ubuntu/.ssh/id_rsa.pub)" && for i in {1..3}; do echo "$SSHJUJU" | ssh node$i.aws -T "cat >> /home/ubuntu/.ssh/authorized_keys"; done;
+```
+
+</details>
+</br>
 
 ### Create bare cloud
 
@@ -137,6 +150,10 @@ Initial model "default" added
 
 ### Add the micro cloud nodes to your Juju bare cloud
 
+<!-- 
+TODO: add some backup materials here during the wait
+-->
+
 ```sh
 # Make sure to write down the IP addresses of your micro cloud nodes
 $ multipass list
@@ -150,13 +167,13 @@ $ multipass shell juju
 
 # Add your micro cloud nodes as machines to the bare cloud
 # We use the '--verbose' option for more visibility
-ubuntu@juju:~$ juju add-machine -v ssh:ubuntu@<IP-node1>
+ubuntu@juju:~$ juju add-machine --show-log -v ssh:ubuntu@<IP-node1>
 created machine 0
 
-ubuntu@juju:~$ juju add-machine -v ssh:ubuntu@<IP-node2>
+ubuntu@juju:~$ juju add-machine --show-log -v ssh:ubuntu@<IP-node2>
 created machine 1
 
-ubuntu@juju:~$ juju add-machine -v ssh:ubuntu@<IP-node3>
+ubuntu@juju:~$ juju add-machine --show-log -v ssh:ubuntu@<IP-node3>
 created machine 2
 
 # ...done! Juju now sees all the machines in our micro cloud, we are ready to deploy applications on top

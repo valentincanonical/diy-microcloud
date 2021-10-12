@@ -5,10 +5,10 @@
 LXD requires to build with charmcraft (complex and useless)
 TODO: update with final LXD charm once ready, or distribute private precompiled charms
 
-- Timeouts
-TODO: investigate with the MicroK8s team, shouldn’t be happening
-
 TODO: more drawings and more on the outcome
+
+TODO: LXD from charmhub command to be checked
+
 -->
 
 **Have you dreamt of having your own home cloud but found it too complex?     
@@ -38,6 +38,9 @@ Table of Contents
    * [Building Your Home Lab Micro Cloud in 5 Steps](#building-your-home-lab-micro-cloud-in-5-steps)
       * [Checkpoint 0](#checkpoint-0)
       * [#1 Prepare the bare metal nodes](./step-01-prepare-bare-nodes.md#1-prepare-the-bare-metal-nodes)
+         * [Option A: Multipass VMs](./step-01-prepare-bare-nodes.md#option-a-multipass-virtual-machines)
+         * [Option B: Cloud VMs](./step-01-prepare-bare-nodes.md#option-b-ec2-aws-virtual-machines)
+         * [Option π: Raspberry Pi](./step-01-prepare-bare-nodes.md#option-π-raspberry-pi-cluster)
       * [#2 Register for model-driven operations](./step-02-model-driven-operations.md#2-register-for-model-driven-operations)
          * [What are Model-Driven Operations?](./step-02-model-driven-operations.md#what-are-model-driven-operations)
          * [Register the bare nodes with Juju](./step-02-model-driven-operations.md#register-the-bare-nodes-with-juju)
@@ -47,8 +50,8 @@ Table of Contents
       * [#4 Create on-demand MicroK8s clusters](./step-04-microk8s-cluster.md#4-create-on-demand-microk8s-clusters)
       * [#5 Run cloud-native applications at the edge with micro clouds](./step-05-micro-cloud-native.md#5-run-cloud-native-applications-at-the-edge-with-micro-clouds)
          * [Register your MicroK8s edge clusters with Portainer](./step-05-micro-cloud-native.md#register-your-microk8s-edge-clusters-with-portainer)
-         * [Register your MicroK8s edge clusters with Juju](./step-05-micro-cloud-native.md#register-your-microk8s-edge-clusters-with-juju)
-         * [Deploy applications to your micro cloud with Juju and Charms](./step-05-micro-cloud-native.md#deploy-applications-to-your-micro-cloud-with-juju-and-charms)
+         <!-- * [Register your MicroK8s edge clusters with Juju](./step-05-micro-cloud-native.md#register-your-microk8s-edge-clusters-with-juju)
+         * [Deploy applications to your micro cloud with Juju and Charms](./step-05-micro-cloud-native.md#deploy-applications-to-your-micro-cloud-with-juju-and-charms) -->
    * [Cleaning behind: how to remove leftovers from your machine](./step-05-micro-cloud-native.md#how-to-clean-your-machine)
    * [Authors/Reviewers](./step-05-micro-cloud-native.md#authorsreviewers)
 
@@ -67,14 +70,9 @@ Table of Contents
 - min 50GB of disk storage left;
 - [Multipass installed](https://multipass.run/) for your platform (stick to the default configuration).
 
-> It has been reported that VPNs (OpenVPN, AnyConnect...) might cause DNS issues.    
-> If you have the option to disable it, please do. Otherwise, you can try [this workaround](https://github.com/canonical/multipass/issues/495#issuecomment-448461250).
-
-Before attending the session, please make sure you can use [Multipass](https://multipass.run/).
-
 <details>
     <summary>
-The following commands should run without any specific configuration (click to expand):
+Before attending the session, please make sure you can use Multipass. The following commands should run without any specific configuration (click to expand).
     </summary>
 
 ```sh
@@ -107,11 +105,32 @@ The following commands should run without any specific configuration (click to e
 > The sequence above should not take more than 10mn to run.
 > Otherwise, please consider stopping any greedy processes, using a more powerful machine or a cloud-based virtual machine.
 
-<!-- ToDo: test on a cloud virtual machine, and link to a tutorial. -->
-
-<!-- TODO: validate doable in 60mn -->
-
 </details>
+</br>
+
+### Issues with VPN software
+
+It has been reported that VPNs (OpenVPN, AnyConnect...) might cause DNS issues.
+**If you have the option to disable your VPN, please do.**
+Otherwise, you can try [this workaround](https://github.com/canonical/multipass/issues/495#issuecomment-448461250).
+
+**If you can't get it to work on your machine, please consider going for cloud virtual machines.**    
+To set it up before the workshop, refer to [the next step instructions](./step-01-prepare-bare-nodes.md#option-b-ec2-aws-virtual-machines).
+<!-- TODO: also add the DNS workaround -->
+<!--
+
+$ multipass shell node1 [Or whatever node needs to be configured]
+ubuntu@node1:~$ sudo mkdir /etc/systemd/resolve.conf.d
+ubuntu@node1:~$ sudo touch /etc/systemd/resolve.conf.d/dns_servers.conf
+ubuntu@node1:~$ sudo nano /etc/systemd/resolve.conf.d/dns_servers.conf
+ 
+And in the file add:
+
+[Resolve]
+DNS=1.1.1.1
+Domains=~.
+
+-->
 
 
 ## Building Your Home Lab Micro Cloud in 5 Steps
@@ -121,7 +140,6 @@ _Expected overall tutorial duration: 70 minutes_
 Once the tutorial is complete, you'll get the following picture running on your edge/home lab.
 
 <img alt="" src="./img/checkpoint-05.png" width="600" />
-<!-- <img alt="Architecture Overview" src="./img/architecture-overview.png" width="600" /> -->
 
 <!-- ### 1,2,3... 4 nodes -->
 <!-- ToDo: section about 3 or 4 nodes? 3 for HA, >4 for resilient HA. 3 to limit power usage. -->
