@@ -14,20 +14,16 @@ Portainer allows you to “build, manage and deploy containers in your Kubernete
 
 The steps for [getting started with Portainer on MicroK8s](https://www.portainer.io/blog/how-to-deploy-portainer-on-microk8s) are fairly easy:
 
+<!--  TODO: validate, do we need all these dependencies or could 'enable portainer' be enough? -->
+
 ```sh
 # Log into one of the nodes
 $ multipass shell node1
 # Log into one of the MicroK8s worker nodes
 $ lxc shell worker1
 
-# Enable the required addons
-root@worker1:~$ microk8s enable dns ha-cluster ingress metrics-server rbac storage
-
 # **Enable the Portainer addon**
 root@worker1:~$ microk8s enable portainer
-
-# Wait for MicroK8s to be ready
-root@worker1:~$ microk8s status --wait-ready
 ```
 
 Last step before accessing your Portainer dashboard: route the traffic from your machine to inside your micro cloud cluster.
@@ -39,8 +35,8 @@ You can either:
 We'll go with the reverse proxy option as it doesn't depend on your host configuration:
 
 ```sh
-ubuntu@node1:~$ sudo apt update && sudo apt install nginx
-ubuntu@node1:~$ IP_MICROK8S_CLUSTER=<REPLACE-WITH-LXD-MACHINE-GET-WITH-LXC-LS>
+ubuntu@node1:~$ sudo apt update && sudo apt install -y nginx
+ubuntu@node1:~$ IP_MICROK8S_CLUSTER=<REPLACE-WITH-MICROK8S-IP> # get the IP with juju status or lxc ls
 ubuntu@node1:~$ cat > /tmp/portainer.conf <<EOF
 server { 
   listen 30777;
@@ -53,11 +49,13 @@ ubuntu@node1:~$ sudo mv /tmp/portainer.conf /etc/nginx/sites-enabled/
 ubuntu@node1:~$ sudo systemctl restart nginx
 ```
 
-- Check the IP address of `node1` and access the Portainer dashboard at `http://<IP-address-node1>:30777` from your machine
+- Check the IP address of `node1` and access the Portainer dashboard at `http://<IP-address-node1>:30777` from your machine (eg; http://192.168.64.32:30777)
 
 Now, as this is going to be an edge cluster, remotely managed, you probably want to register it to a central control place. With Portainer, this is super easy! Click [here and follow the instructions](https://documentation.portainer.io/v2.0/endpoints/edge/).
 
 If you're just trying this out and don't have a "central control plane", this is fine. You can create a new MicroK8s cluster that you will register from the Portainer dashboard that you just deployed, just for fun! Refer to [section 4](./step-04-microk8s-cluster.md#4-create-on-demand-microk8s-clusters) on how to do that.
+
+<!-- TODO: for the demo, use New App -> ubuntu/grafana -> port 30000 -> cp nginx/portainer.conf -->
 
 <!-- ## Register your MicroK8s edge clusters with Juju
 
