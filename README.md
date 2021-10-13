@@ -48,6 +48,8 @@ Table of Contents
          * [Option A: Build your private LXD cloud in one command with Juju](./step-03-lxd-cloud.md#option-a-build-your-private-lxd-cloud-in-one-juju-command)>
          * [Option B: Manually deploy LXD cluster](./step-03-lxd-cloud.md#option-b-manually-configure-lxd-cluster)
       * [#4 Create on-demand MicroK8s clusters](./step-04-microk8s-cluster.md#4-create-on-demand-microk8s-clusters)
+         * [Option A: Deploy on-demand kubernetes clusters in one Juju command](./step-04-microk8s-cluster.md#option-a-deploy-on-demand-kubernetes-clusters-in-one-juju-command)
+         * [Option B: Manually deploy MicroK8s clusters](./step-04-microk8s-cluster.md#option-b-manually-deploy-microk8s-clusters)
       * [#5 Run cloud-native applications at the edge with micro clouds](./step-05-micro-cloud-native.md#5-run-cloud-native-applications-at-the-edge-with-micro-clouds)
          * [Register your MicroK8s edge clusters with Portainer](./step-05-micro-cloud-native.md#register-your-microk8s-edge-clusters-with-portainer)
          <!-- * [Register your MicroK8s edge clusters with Juju](./step-05-micro-cloud-native.md#register-your-microk8s-edge-clusters-with-juju)

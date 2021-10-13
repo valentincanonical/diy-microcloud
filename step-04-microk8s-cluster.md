@@ -8,7 +8,7 @@ _Expected Duration: 25mn_
 MicroK8s is a low-ops, minimal production Kubernetes, for devs, cloud, clusters, workstations, Edge and IoT.    
 In a micro cloud architecture, Kubernetes APIs make management of edge clusters easier to integrate with existing infrastructure and centralised control planes. MicroK8s is lightweight and yet features the K8s APIs, none added or removed. MicroK8s ships with with sensible defaults that ‘just work’. And from 3 nodes, MicroK8s automatically supports an highly-available configuration.
 
-<!-- TODO: MicroK8s gif/logo? -->
+<img alt="MicroK8s" src="https://assets.ubuntu.com/v1/e63c5d75-microk8s.svg" width="100" />
 
 ## Option A: Deploy on-demand kubernetes clusters in one Juju command
 
@@ -225,7 +225,7 @@ high-availability: yes
 ...
 ```
 
-## Option B: Manually deploy a MicroK8s cluster
+## Option B: Manually deploy MicroK8s clusters
 
 If you want to see what is happening under the hood, you can manually start LXD containers and set up MicroK8s. We would recommend using [the Juju option](#deploy-on-demand-kubernetes-clusters-with-juju) to save some time and uncover the power of Charmed Operators, but you're also good to go with this option. Installing MicroK8s is only the matter of one "snap install microk8s" command and a "microk8s add/join" per machine to cluster your nodes together.
 
