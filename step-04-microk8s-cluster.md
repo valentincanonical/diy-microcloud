@@ -20,7 +20,7 @@ We'll start by downloading this custom MicroK8s Charmed Operator, a package with
 ### Register our LXD micro cloud for Model-Driven Operations
 
 Now that we have a LXD micro cloud, we want to be able to operate it from Juju with Charmed Operators.
-For that, we will need to register it.
+For that, we need to register it.
 
 #### Prepare the credentials to connect to our LXD micro cloud
 
@@ -38,34 +38,9 @@ Admin password for microcloud:
 ```
 
 While it might seem the command has failed, it has actually created all the certificates we need.
-We will copy them to a credentials file, that we will then format for Juju to use.
+We will instruct our LXD cluster to trust our client certificate so that Juju can use it to operate our micro cloud.
 
-```sh
-# multipass shell node1
-cat ~/snap/lxd/common/config/client.crt >> credentials.yaml
-cat ~/snap/lxd/common/config/client.key >> credentials.yaml
-cat ~/snap/lxd/common/config/servercerts/microcloud.crt >> credentials.yaml
-sed -e 's/^/        /' -i credentials.yaml
-```
-
-Then use your favorite editor (e.g. `ubuntu@node1:~$ nano credentials.yaml`) to add the following yaml structure:
-```yaml
-credentials:
-  lxdcloud:
-    admin:
-      auth-type: certificate
-      client-cert: |
-        -----BEGIN CERTIFICATE-----
-        -----END CERTIFICATE-----
-      client-key: |
-        -----BEGIN EC PRIVATE KEY-----
-        -----END EC PRIVATE KEY-----
-      server-cert: |
-        -----BEGIN CERTIFICATE-----
-        -----END CERTIFICATE-----
-```
-
-We then need to trust the client certificate from the LXD cluster. We will do that using a juju action.
+We will do that using a Juju action. Juju actions are day-2 operations built into a Charmed Operator.
 
 ```sh
 # transfer or copy and paste the client.crt file to your juju controller machine
@@ -73,9 +48,12 @@ $ multipass transfer node1:/home/ubuntu/snap/lxd/common/config/client.crt ./
 $ multipass transfer ./client.crt juju:/home/ubuntu/client.crt
 $ rm client.crt
 # use a juju action to trust the client certificate on the LXD micro cloud cluster
-$ multipass exec juju -- bash -c 'juju run-action lxd/0 add-trusted-client cert="$(cat /home/ubuntu/client.crt)" --wait'
+$ multipass shell juju
+ubuntu@juju:~$ juju run-action lxd/0 add-trusted-client cert="$(cat /home/ubuntu/client.crt)" --wait
 # wait until it says the certificate has been trusted
+$ logout
 ```
+
 <details>
     <summary>
 Click here to expand the instruction for AWS cloud machines.
@@ -89,9 +67,10 @@ Click here to expand the instruction for AWS cloud machines.
 </br>
 
 Adding the remote LXD cluster should now work:
+
 ```sh
 $ multipass shell node1
-ubuntu@node1:~$ lxc remote add microcloud 192.168.64.32
+ubuntu@node1:~$ lxc remote add microcloud <ip-node1>
 ubuntu@node1:~$ lxc remote switch microcloud
 ubuntu@node1:~$ lxc cluster ls
 +-------+----------------------------+----------+--------+-------------------+--------------+
@@ -111,37 +90,25 @@ We can now securely access our LXD cluster remotely.
 
 ```sh
 ubuntu@node1:~$ sudo snap install juju --classic
-ubuntu@node1:~$ juju add-cloud lxdcloud
 ```
 
 #### Register as a Juju cloud
+
+We don't need to explictly `juju add-cloud` nor `juju add-credential microcloud` as we already did the remote configuration earlier with the certificate and the `lxc remote add` command. [Read more about Juju clouds](https://juju.is/docs/olm/clouds).
+
 ```sh
-# Let's add our LXD cloud to Juju, naming it "lxdcloud"
-ubuntu@node1:~$ juju add-cloud lxdcloud
-# select cloud type 'lxd'
-Select cloud type: lxd
-# enter the API endpoint retrieved previously with the 'lxc cluster ls' command
-Enter the API endpoint url for the remote LXD server: https://<node1-ip-address>:8443
-... # leave other choices empty
-Cloud "lxdcloud" successfully added to your local client.
-
-# We then need to add the authentication information to administrate our LXD cloud
-# We pass the credentials.yaml file previously crafted with the client certificate
-ubuntu@node1:~$ juju add-credential lxdcloud -f credentials.yaml
-Credential "admin" added locally for cloud "lxdcloud".
-
-# Now we can bootstrap our LXD cloud, asking Juju to setup an agent on it
-ubuntu@node1:~$ juju bootstrap lxdcloud
-Creating Juju controller "lxdcloud-default" on lxdcloud/default
+# Let's bootstrap our LXD cloud, asking Juju to setup an agent on it
+ubuntu@node1:~$ juju bootstrap microcloud
+Creating Juju controller "microcloud-default" on microcloud/default
 ...
-Bootstrap complete, controller "lxdcloud-default" is now available
+Bootstrap complete, controller "microcloud-default" is now available
 Controller machines are in the "controller" model
 Initial model "default" added
 
 # Once the bootstrap is complete, the "status" command shows our microcloud registered
 ubuntu@node1:~$ juju status
 Model    Controller          Cloud/Region        Version  SLA          Timestamp
-default  lxdcloud-default  lxdcloud/default  2.9.12   unsupported  13:05:13+02:00
+default  microcloud-default  microcloud/default  2.9.12   unsupported  13:05:13+02:00
 
 Model "admin/default" is empty.
 ```
@@ -189,7 +156,7 @@ ubuntu@node1:~$ juju add-model kubernetes-is-easy
 
 ubuntu@node1:~$ juju status
 Model               Controller          Cloud/Region        Version  SLA          Timestamp
-kubernetes-is-easy  lxdcloud-default    lxdcloud/default    2.9.14   unsupported  18:46:16+02:00
+kubernetes-is-easy  microcloud-default  microcloud/default  2.9.14   unsupported  18:46:16+02:00
 
 Model "admin/kubernetes-is-easy" is empty.
 
@@ -199,7 +166,7 @@ ubuntu@node1:~$ juju deploy ./microk8s_ubuntu-20.04.charm microk8s -n3 --force
 # We can watch operations as they happen with 'juju status'
 ubuntu@node1:~$ watch --color juju status --color
 Model               Controller          Cloud/Region        Version  SLA          Timestamp
-kubernetes-is-easy  lxdcloud-default   lxdcloud/default     2.9.14   unsupported  18:58:25+02:00
+kubernetes-is-easy  microcloud-default  microcloud/default  2.9.14   unsupported  18:58:25+02:00
 
 App       Version  Status   Scale  Charm     Store  Channel  Rev  OS      Message
 microk8s           waiting    0/3  microk8s  local             0  ubuntu  waiting for machine
