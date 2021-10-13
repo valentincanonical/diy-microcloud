@@ -43,6 +43,7 @@ or, you can also compile it yourself for your platform (click to expand the inst
     </summary>
 
 ```sh
+    # on a new, clean machine
     git clone -b cluster https://github.com/simondeziel/charm-lxd.git
     sudo snap install charmcraft --classic
     sudo lxd init --auto
