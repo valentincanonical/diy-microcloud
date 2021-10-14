@@ -23,7 +23,6 @@ Here's how to use the [LXD Charmed Operator](https://github.com/canonical/charm-
 <!-- TODO: remove section once official charm is available. -->
 ### Download the LXD Charm
 
-<!-- TODO: Use Launchpad farm to building multi architecture -->
 ```sh
 $ multipass shell juju
 
@@ -36,7 +35,7 @@ ubuntu@juju:~$ wget https://raw.githubusercontent.com/valentincanonical/diy-micr
 # For Rapsberry Pi ARM64 users
 TODO file for Rpi users
 ```
-<!-- TODO: lxd charm does not always work -->
+
 <details>
     <summary>
 or, you can also compile it yourself for your platform (click to expand the instructions).

@@ -29,7 +29,6 @@ With Charmed Operators, you can package concepts and operational knowledge. With
 Check out [this great example](https://jaas.ai/web-infrastructure-in-a-box/bundle/10) of Charmed Operators and relations (relations diagram above). Also, if you're curious to understand how JuJu can help brewing coffee with Kubernetes, [here's a nice treat](https://juju.is/brew)!
 
 <!-- ToDo: Add link to the Edge MDO blog entry on Ubuntu.com (TBD) -->
-<!-- ToDo: Add link to the Juju @ Kubecon blogs (TBD) -->
 
 ## Register the bare nodes with Juju
 
@@ -109,7 +108,6 @@ Now that we have everything in place, let's create a Juju bare cloud to control 
 > If we used MAAS to provision our nodes, these steps would be much easier!
 > We'll keep that in mind for the next time.
 
-<!-- ToDo: trust the RSA key if not yet -->
 <!-- ToDo: explain the concept, what is happening behind the scenes, high level -->
 
 ```sh

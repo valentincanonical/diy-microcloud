@@ -4,7 +4,7 @@
 
 Your micro cloud is now ready, registered, and you know how to create lightweight MicroK8s clusters on demand. The next steps are optional, feel free to pick what's the most interesting to you. The goal there is to get you productive with fancy applications running on your homelab micro cloud.
 
-<img alt="" src="./img/checkpoint-05.png" width="600" />
+<img alt="Micro cloud stack with kubernetes workloads running at the edge." src="./img/checkpoint-05.png" width="600" />
 
 ## Register your MicroK8s edge clusters with Portainer
 
@@ -14,13 +14,10 @@ Portainer allows you to “build, manage and deploy containers in your Kubernete
 
 The steps for [getting started with Portainer on MicroK8s](https://www.portainer.io/blog/how-to-deploy-portainer-on-microk8s) are fairly easy:
 
-<!--  TODO: validate, do we need all these dependencies or could 'enable portainer' be enough? -->
-
 ```sh
-# Log into one of the nodes
-$ multipass shell node1
-# Log into one of the MicroK8s worker nodes
-$ lxc shell worker1
+# If you used Juju to deploy MicroK8s
+$ juju ssh microk8s/0
+# Otherwise -- multipass shell node1; lxc shell worker1;
 
 # **Enable the Portainer addon**
 root@worker1:~$ microk8s enable portainer
@@ -36,7 +33,8 @@ We'll go with the reverse proxy option as it doesn't depend on your host configu
 
 ```sh
 ubuntu@node1:~$ sudo apt update && sudo apt install -y nginx
-ubuntu@node1:~$ IP_MICROK8S_CLUSTER=<REPLACE-WITH-MICROK8S-IP> # get the IP with juju status or lxc ls
+# get the IP with juju status or lxc ls
+ubuntu@node1:~$ IP_MICROK8S_CLUSTER=<REPLACE-WITH-MICROK8S-IP>
 ubuntu@node1:~$ cat > /tmp/portainer.conf <<EOF
 server { 
   listen 30777;
@@ -56,6 +54,15 @@ Now, as this is going to be an edge cluster, remotely managed, you probably want
 If you're just trying this out and don't have a "central control plane", this is fine. You can create a new MicroK8s cluster that you will register from the Portainer dashboard that you just deployed, just for fun! Refer to [section 4](./step-04-microk8s-cluster.md#4-create-on-demand-microk8s-clusters) on how to do that.
 
 <!-- TODO: for the demo, use New App -> ubuntu/grafana -> port 30000 -> cp nginx/portainer.conf -->
+
+## Beyond the workshop
+
+- [Deploy an application on your kubernetes cluster from Canonical's LTS Docker Images](TODO)
+- [Register your MicroK8s edge cluster with Juju](TODO)
+- [Deploy applications to your micro cloud with Juju and Charmed Operators](TODO)
+- [Register an edge endpoint with Portainer](https://documentation.portainer.io/v2.0/endpoints/edge/)
+- Create more isolated on-demand kubernetes clusters on your edge micro cloud with    
+  `juju add-model my-kubernetes && juju deploy microk8s -n1`
 
 <!-- ## Register your MicroK8s edge clusters with Juju
 
@@ -95,11 +102,15 @@ No instances found.
 # done!
 ```
 
+If you used the AWS cloud machines option, simply:
+- "Terminate" the instances you launched for the tutorial
+- Remove the microcloud key from "Network & Security" > "Key Pairs"
+- Remove the microcloud Security Group from "Network & Security" > "Security Groups"
 
 # Authors/Reviewers
 
 - Valentin Viennot, Product Manager, Canonical (Twitter: [@ValentinViennot](https://twitter.com/valentinviennot))
-- Pedro Cruz, Product Lead, Canonical
+- Pedro Cruz, Product Lead, Canonical (Twitter: [@ArduinoPedro](https://twitter.com/ArduinoPedro))
 
 <!-- TODO: make review by Theodora -->
 

@@ -24,34 +24,33 @@ For that, we need to register it.
 
 #### Prepare the credentials to connect to our LXD micro cloud
 
-First, let's configure remote access to our LXD micro cloud:
+First, let's configure remote access to our LXD micro cloud.
+
+If you deployed your LXD cluster with Juju, it doesn't have an administrator password and needs to be accessed with certificate-based authentication.
+
+We will run the `lxc remote add` command in order to generate a new client certificate.
 
 ```sh
 $ multipass shell node1
 
-ubuntu@node1:~$ lxc remote add microcloud 192.168.64.32
+ubuntu@node1:~$ lxc remote add microcloud <ip-node1>
 Generating a client certificate. This may take a minute...
 Certificate fingerprint: abc123def
 ok (y/n)? y
-Admin password for microcloud:
-# exit with ctrl-c
+Admin password for microcloud:# exit with ctrl-c
+
+ubuntu@node1:~$ logout
 ```
 
-While it might seem the command has failed, it has actually created all the certificates we need.
-We will instruct our LXD cluster to trust our client certificate so that Juju can use it to operate our micro cloud.
+While it might seem the command has failed, it has actually created all we need.
 
-We will do that using a Juju action. Juju actions are day-2 operations built into a Charmed Operator.
+Let's copy our newly generated client certificate to the `juju` controller machine:
 
 ```sh
 # transfer or copy and paste the client.crt file to your juju controller machine
 $ multipass transfer node1:/home/ubuntu/snap/lxd/common/config/client.crt ./
 $ multipass transfer ./client.crt juju:/home/ubuntu/client.crt
 $ rm client.crt
-# use a juju action to trust the client certificate on the LXD micro cloud cluster
-$ multipass shell juju
-ubuntu@juju:~$ juju run-action lxd/0 add-trusted-client cert="$(cat /home/ubuntu/client.crt)" --wait
-# wait until it says the certificate has been trusted
-$ logout
 ```
 
 <details>
@@ -59,12 +58,29 @@ $ logout
 Click here to expand the instruction for AWS cloud machines.
     </summary>
 
+From your host:
+
 ```sh
   ssh node1.aws cat /home/ubuntu/snap/lxd/common/config/client.crt | ssh juju.aws -T "cat > /home/ubuntu/client.crt"
 ```
 
 </details>
 </br>
+
+We need to instruct our LXD cluster to trust our client certificate so that Juju can use it to operate our micro cloud.
+
+We will do that using a Juju action. Juju actions are day-2 operations built into a Charmed Operator.
+<!-- or, from node1: lxc config trust add /home/ubuntu/snap/lxd/common/config/client.crt -->
+
+```sh
+# use a juju action to trust the client certificate on the LXD micro cloud cluster
+$ multipass shell juju
+
+ubuntu@juju:~$ juju run-action lxd/0 add-trusted-client cert="$(cat /home/ubuntu/client.crt)" --wait
+# wait until it says the certificate has been trusted
+
+$ logout
+```
 
 Adding the remote LXD cluster should now work:
 
@@ -159,7 +175,9 @@ Model               Controller          Cloud/Region        Version  SLA        
 kubernetes-is-easy  microcloud-default  microcloud/default  2.9.14   unsupported  18:46:16+02:00
 
 Model "admin/kubernetes-is-easy" is empty.
+```
 
+```sh
 # We deploy the app 'microk8s' from the local charm with force option as we use an unvalidated LXD profile
 ubuntu@node1:~$ juju deploy ./microk8s_ubuntu-20.04.charm microk8s -n3 --force
 
@@ -182,6 +200,12 @@ Machine  State    DNS          Inst id        Series  AZ  Message
 2        pending               pending        focal
 ```
 
+<!--
+TODO: tell the story
+- what is happening
+- what have we achieved
+- what are we going to do next?
+-->
 Once everything is green and active/ready, we can make use of our MicroK8s cluster!
 
 ```sh
