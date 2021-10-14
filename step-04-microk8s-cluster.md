@@ -118,7 +118,7 @@ Model "admin/default" is empty.
 #### Download the MicroK8s charm
 ```sh
 # For ARM64 users
-TODO: file for ARM64 users
+ubuntu@node1:~$ wget https://raw.githubusercontent.com/valentincanonical/diy-microcloud/main/precompiled/microk8s_ubuntu-20.04-arm64.charm -O microk8s_ubuntu-20.04.charm
 
 # For AMD64 users
 ubuntu@node1:~$ wget https://raw.githubusercontent.com/valentincanonical/diy-microcloud/main/precompiled/microk8s_ubuntu-20.04-amd64.charm -O microk8s_ubuntu-20.04.charm

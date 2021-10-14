@@ -28,7 +28,7 @@ Here's how to use the [LXD Charmed Operator](https://github.com/canonical/charm-
 $ multipass shell juju
 
 # For ARM64 users
-TODO: file for ARM64 users
+ubuntu@juju:~$ wget https://raw.githubusercontent.com/valentincanonical/diy-microcloud/main/precompiled/lxd_ubuntu-20.04-arm64.charm -O lxd_ubuntu-20.04.charm
 
 # For AMD64 users
 ubuntu@juju:~$ wget https://raw.githubusercontent.com/valentincanonical/diy-microcloud/main/precompiled/lxd_ubuntu-20.04-amd64.charm -O lxd_ubuntu-20.04.charm
