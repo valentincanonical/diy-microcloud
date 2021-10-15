@@ -6,11 +6,13 @@ _Expected duration: 10mn_
 
 ## What are Model-Driven Operations?
 
-"[Model-Driven Operations](https://juju.is/model-driven-operations-manifesto), say what?" The concept is relatively easy yet extremely powerful. Imagine we were discussing over the phone, and you suddenly wanted me to draw you a sheep; you would have two options:
-- Guide me, step by step, trying to be as specific as possible - "draw four small vertical lines, now draw a circle on top..."
-- Or rely on our shared knowledge of concepts and simply ask, "can you draw me a sheep, please."
+"[Model-Driven Operations](https://juju.is/model-driven-operations-manifesto), say what?" The concept is relatively simple yet extremely powerful.
 
-I promise you; the first option won't give you anything even close to a sheep... and it will take _a lot of time_. And if someone else was listening to our conversation and trying to follow the drawing instructions, I am sure theirs wouldn't look anything like mine... nor as a sheep.
+Imagine we were discussing over the phone, and you suddenly wanted me to draw you a sheep. You would have two options:
+- Guide me, step by step, trying to be as specific as possible: "Draw four small vertical lines, now draw a circle on top..."
+- Or rely on our shared knowledge of concepts and simply ask, "Can you draw me a sheep, please?"
+
+I promise you, the first option won't give you anything even close to a sheep... and it will take _a lot of time_. And if someone else was listening to our conversation and trying to follow the drawing instructions, I am sure theirs wouldn't look anything like mine... nor would it resemble a sheep.
 
 <p align="center">
 <img alt="Better sheep with Model Driven Operations." src="./img/sheeps.jpg" width="400" />
@@ -20,13 +22,13 @@ I promise you; the first option won't give you anything even close to a sheep...
 
 Now imagine I am a server, and there are thousands of us with slightly different configurations (different cloud, platform, architecture...). Wouldn't it be great if you could just teach us what a database is? And teach us how it relates to other applications to provide persistent storage? That's what Model Driven Operations are about!    
 
-With Charmed Operators, you can package concepts and operational knowledge. With Juju, you can apply this knowledge with declarative queries, politely asking for what you need. "Please Juju, deploy this and that. Also, please Juju relate this with that." And that's it; you have a web server deployed on multiple clouds with a database properly configured and related to your web application! If you're interested, there's a lot of exciting and fun reads [on Juju.is](https://juju.is/blog).
+With Charmed Operators, you can package concepts and operational knowledge. With Juju, you can apply this knowledge with declarative queries, politely asking for what you need. "Please Juju, deploy this and that. Also, please Juju, relate this with that." And that's it; you have a web server deployed on multiple clouds with a database properly configured and related to your web application! If you're interested, there are many exciting and fun reads [on Juju.is](https://juju.is/blog).
 
 <p align="center">
 <img alt="Web Infrastructure deployed with Juju and Charmed Operators." src="./img/juju-web-bundle.png" width="400" />
 </p>
 
-Check out [this great example](https://jaas.ai/web-infrastructure-in-a-box/bundle/10) of Charmed Operators and relations (relations diagram above). Also, if you're curious to understand how JuJu can help brewing coffee with Kubernetes, [here's a nice treat](https://juju.is/brew)!
+Check out [this great example](https://jaas.ai/web-infrastructure-in-a-box/bundle/10) of Charmed Operators and relations (relations diagram above). Also, if you're curious to understand how Juju can help brewing coffee with Kubernetes, [here's a nice treat](https://juju.is/brew)!
 
 <!-- ToDo: Add link to the Edge MDO blog entry on Ubuntu.com (TBD) -->
 
@@ -36,7 +38,7 @@ Check out [this great example](https://jaas.ai/web-infrastructure-in-a-box/bundl
 
 ### Launch the Juju controller machine
 
-We need an additional controller machine to operate our physical nodes. This can be any machine that has network access to your micro cloud nodes. Let's simply launch an new tiny VM with Multipass.
+We need an additional controller machine to operate our physical nodes. This can be any machine that has network access to your micro cloud nodes. Let's simply launch a new tiny VM with Multipass.
 
 ```sh
 multipass launch --name juju --mem 2G --disk 5G --cpus 2
