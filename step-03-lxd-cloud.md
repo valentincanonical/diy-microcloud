@@ -4,16 +4,16 @@
 
 _Expected duration: 15mn_
 
-This section is when we get to build our first cloud capabilities. We will cluster the physical (or - for our demo - virtual) machines together, abstracting them as a virtual layer capable of providing both Linux containers and virtual machines.
+This section is where we get to build our first cloud capabilities. We will cluster the physical (or, for our demo, virtual) machines together, abstracting them as a virtual layer capable of providing both Linux containers and virtual machines.
 We will then have virtual machines from almost any Linux distribution available no more than one command away. (If you're a more advanced user, [read more on how to get Windows VMs with LXD](https://github.com/lxc/distrobuilder#repack-windows-iso).)
 
-Abstracting away from the bare metal layer is a practical step to building automated, scalable, and modular micro clouds. You may wonder why we don't just go directly with the K8s layer - and you could do it -, so here's what you get with the additional LXD virtualisation layer:
+Abstracting away from the bare metal layer is a practical step to building automated, scalable, and modular micro clouds. You may wonder why we don't just go directly with the K8s layer (and you could do it), so here's what you get with the additional LXD virtualisation layer:
 
-- **Increased security**: machine containers provide better protection than K8s containers to keep your workloads confined;
-- **Multi-tenancy**: in some situations, you might need more than one K8s cluster on the same micro cloud - don't shut any door now;
-- **Flexibility**: adding and removing physical nodes has never been easier - with LXD, you can [move containers/virtual machines](https://linuxcontainers.org/lxc/manpages/man1/lxc-copy.1.html) between physical nodes;
-- **High-availability**: LXD adds a layer of resiliency to failures and outages with built-in high availability from 3 nodes and above;
-- **Simplified operations**: the more you can abstract, the more you will standardise and automate remote management operations.
+- **Increased security**: Machine containers provide better protection than K8s containers to keep your workloads confined.
+- **Multi-tenancy**: In some situations, you might need more than one K8s cluster on the same micro cloud - don't shut any door now.
+- **Flexibility**: Adding and removing physical nodes has never been easier. With LXD, you can [move containers/virtual machines](https://linuxcontainers.org/lxc/manpages/man1/lxc-copy.1.html) between physical nodes.
+- **High-availability**: LXD adds a layer of resiliency to failures and outages with built-in high availability from 3 nodes and above.
+- **Simplified operations**: The more you can abstract, the more you will standardise and automate remote management operations.
 
 ## Option A: Build your private LXD cloud in one Juju command
 
@@ -38,7 +38,7 @@ TODO file for Rpi users
 
 <details>
     <summary>
-or, you can also compile it yourself for your platform (click to expand the instructions).
+You can also compile it yourself for your platform (click to expand the instructions).
     </summary>
 
 ```sh
@@ -54,6 +54,7 @@ or, you can also compile it yourself for your platform (click to expand the inst
 </br>
 
 ### Deploy the LXD Charm
+
 One command to deploy and configure your LXD cluster with Juju and the [LXD machine charm](https://charmhub.io/lxd):
 ```sh
 ubuntu@juju:~$ juju deploy ./lxd_ubuntu-20.04.charm lxd -n 3 --to 0,1,2 --config mode=cluster
@@ -84,7 +85,7 @@ Machine  State    DNS            Inst id               Series  AZ  Message
 
 If you want to see what is happening under the hood, you can manually configure LXD on each node and cluster them together. We recommend using the Juju option to save you some time and uncover the power of Charmed Operators, but you're also good to go with this option.
 
-[Click here for the instructions to manually build your edge cloud using LXD.](./step03-lxd-cloud/README.md#initiate-the-first-node)
+[Click here for instructions on manually building your edge cloud using LXD.](./step03-lxd-cloud/README.md#initiate-the-first-node)
 
 ---
 
