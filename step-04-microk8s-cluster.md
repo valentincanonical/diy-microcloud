@@ -5,8 +5,9 @@
 
 _Expected Duration: 25mn_
 
-MicroK8s is a low-ops, minimal production Kubernetes, for devs, cloud, clusters, workstations, Edge and IoT.    
-In a micro cloud architecture, Kubernetes APIs make management of edge clusters easier to integrate with existing infrastructure and centralised control planes. MicroK8s is lightweight and yet features the K8s APIs, none added or removed. MicroK8s ships with with sensible defaults that ‘just work’. And from 3 nodes, MicroK8s automatically supports an highly-available configuration.
+MicroK8s is a low-ops, minimal production Kubernetes for devs, cloud, clusters, workstations, Edge and IoT.
+
+In a micro cloud architecture, Kubernetes APIs make management of edge clusters easier to integrate with existing infrastructure and centralised control planes. MicroK8s is lightweight, yet features all the K8s APIs, none added or removed. MicroK8s ships with with sensible defaults that "just work". And from 3 nodes, MicroK8s automatically supports an highly-available configuration.
 
 <img alt="MicroK8s" src="https://assets.ubuntu.com/v1/e63c5d75-microk8s.svg" width="100" />
 
@@ -15,6 +16,7 @@ In a micro cloud architecture, Kubernetes APIs make management of edge clusters 
 Currently, there is no MicroK8s charm on [CharmHub](https://charmhub.io/), the Store for Charmed Operators. However, there is a version contributed [by @pjdc](https://launchpad.net/~pjdc/+git/charm-microk8s) a community member on Launchpad. It's just a matter of time until we get an official one!
 
 For this workshop, we forked pjdc's version and adapted it to work on top of LXD.
+
 We'll start by downloading this custom MicroK8s Charmed Operator, a package with all the knowledge on how to deploy a MicroK8s cluster on top of LXD.
 
 ### Register our LXD micro cloud for Model-Driven Operations
@@ -42,7 +44,7 @@ Admin password for microcloud:# exit with ctrl-c
 ubuntu@node1:~$ logout
 ```
 
-While it might seem the command has failed, it has actually created all we need.
+While it might seem like the command has failed, it has actually created all we need.
 
 Let's copy our newly generated client certificate to the `juju` controller machine:
 
@@ -110,7 +112,7 @@ ubuntu@node1:~$ sudo snap install juju --classic
 
 #### Register as a Juju cloud
 
-We don't need to explictly `juju add-cloud` nor `juju add-credential microcloud` as we already did the remote configuration earlier with the certificate and the `lxc remote add` command. [Read more about Juju clouds](https://juju.is/docs/olm/clouds).
+We don't need to explictly use `juju add-cloud` nor `juju add-credential microcloud`, as we already did the remote configuration earlier with the certificate and the `lxc remote add` command. [Read more about Juju clouds](https://juju.is/docs/olm/clouds).
 
 ```sh
 # Let's bootstrap our LXD cloud, asking Juju to setup an agent on it
@@ -132,6 +134,7 @@ Model "admin/default" is empty.
 ### Deploy MicroK8s clusters in one Juju command
 
 #### Download the MicroK8s charm
+
 ```sh
 # For ARM64 users
 ubuntu@node1:~$ wget https://raw.githubusercontent.com/valentincanonical/diy-microcloud/main/precompiled/microk8s_ubuntu-20.04-arm64.charm -O microk8s_ubuntu-20.04.charm
@@ -145,7 +148,7 @@ TODO file for Rpi users
 
 <details>
     <summary>
-or, you can also compile it yourself for your platform (click to expand the instructions).
+You can also compile it yourself for your platform (click to expand the instructions).
     </summary>
 
 ```sh
@@ -163,9 +166,9 @@ or, you can also compile it yourself for your platform (click to expand the inst
 #### Deploy with Juju
 
 In order, we will:
-- create a new model, a clean space to isolate our work;
-- deploy four microk8s nodes with a simple juju command;
-- sip a cocktail 🍹 while Juju does all the work for us (launch four LXD containers, install microk8s on each of them, and cluster them together).
+1. Create a new model, a clean space to isolate our work.
+2. Deploy four microk8s nodes with a simple juju command.
+3. Sip a cocktail 🍹 while Juju does all the work for us (launch four LXD containers, install microk8s on each of them, and cluster them together).
 
 ```sh
 ubuntu@node1:~$ juju add-model kubernetes-is-easy
@@ -218,9 +221,9 @@ high-availability: yes
 
 ## Option B: Manually deploy MicroK8s clusters
 
-If you want to see what is happening under the hood, you can manually start LXD containers and set up MicroK8s. We would recommend using [the Juju option](#deploy-on-demand-kubernetes-clusters-with-juju) to save some time and uncover the power of Charmed Operators, but you're also good to go with this option. Installing MicroK8s is only the matter of one "snap install microk8s" command and a "microk8s add/join" per machine to cluster your nodes together.
+If you want to see what is happening under the hood, you can manually start LXD containers and set up MicroK8s. We recommend using [the Juju option](#deploy-on-demand-kubernetes-clusters-with-juju) to save some time and uncover the power of Charmed Operators, but you're also good to go with this option. Installing MicroK8s is only a matter of one `snap install microk8s` command and a `microk8s add`/`join` per machine to cluster your nodes together.
 
-[Click here for the instructions to manually create MicroK8s clusters.](./step04-microk8s-clusters/README.md#manual-installation)
+[Click here for instructions on manually creating MicroK8s clusters.](./step04-microk8s-clusters/README.md#manual-installation)
 
 Read more on [the microk8s.io website](https://microk8s.io/docs/lxd).
 
