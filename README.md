@@ -19,11 +19,11 @@ Micro clouds enable anyone to build a lightweight cloud anywhere.**
 Building micro clouds or edge clouds has vast potential.
 The edge is where the real world happens.
 Edge clusters bring your technologies to the consumer for more privacy and less latency.
-So, where to begin? With Arm, duh, but what about after that?
+So, where to begin? With Arm, obviously. But what about after that?
 
 This workshop gets you started.
-For beginners, from install, set-up and config of an Ubuntu K8s cluster.
-And experts, talking DevOps, AI use cases, and inferences at the edge, on something as simple and accessible as a Raspberry Pi or a Jetson Nano.
+It's suitable for beginners, from install, set-up and config of an Ubuntu K8s cluster.
+But it also has value for experts, talking DevOps, AI use cases, and inferences at the edge, on something as simple and accessible as a Raspberry Pi or a Jetson Nano.
 
 <p align="center">
 <img alt="Micro cloud: a cloudish layer cake." src="https://res.cloudinary.com/canonical/image/fetch/f_auto,q_auto,fl_sanitize,w_752,h_430/https://assets.ubuntu.com/v1/1bb2f79a-telco-micro-clouds.svg" width="400" />
@@ -63,13 +63,13 @@ Table of Contents
 
 ## Minimum Configuration
 
-> To enable the most to follow this tutorial at home, we won't require any specific hardware - only your workstation will do it.
+> To enable more people to follow this tutorial at home, we won't require any specific hardware - only your workstation.
 > Nonetheless, you will find secondary paths and alternative options all along, including instructions to use a cluster of Raspberry Pis.
-> The following requirements apply if you're willing to follow the primary path, using virtualisation to emulate multiple small devices.
+> The following requirements apply if you're willing to follow the primary path, using virtualisation to emulate multiple small devices:
 
-- 16GB RAM recommended (8GB min required);
-- min 4-core CPU;
-- min 50GB of disk storage left;
+- 16GB RAM recommended (8GB min required).
+- Min 4-core CPU.
+- Min 50GB of disk storage left.
 - [Multipass installed](https://multipass.run/) for your platform (stick to the default configuration).
 
 <details>
@@ -105,7 +105,7 @@ Before attending the session, please make sure you can use Multipass. The follow
 ```
 
 > The sequence above should not take more than 10mn to run.
-> Otherwise, please consider stopping any greedy processes, using a more powerful machine or a cloud-based virtual machine.
+> Otherwise, please consider stopping any greedy processes, using a more powerful machine or trying a cloud-based virtual machine.
 
 </details>
 </br>
@@ -117,7 +117,7 @@ It has been reported that VPNs (OpenVPN, AnyConnect...) might cause DNS issues.
 Otherwise, you can try [this workaround](https://github.com/canonical/multipass/issues/495#issuecomment-448461250).
 
 **If you can't get it to work on your machine, please consider going for cloud virtual machines.**    
-To set it up before the workshop, refer to [the next step instructions](./step-01-prepare-bare-nodes.md#option-b-ec2-aws-virtual-machines).
+To set it up before the workshop, refer to [the next step's instructions](./step-01-prepare-bare-nodes.md#option-b-ec2-aws-virtual-machines).
 <!-- TODO: also add the DNS workaround -->
 <!--
 
@@ -151,7 +151,7 @@ Once the tutorial is complete, you'll get the following picture running on your 
 ### Checkpoint 0
 
 To make it easier to follow, we split this tutorial into five steps with clear goals.
-At the end of each step, a checkpoint will help you understand what is the outcome.
+At the end of each step, a checkpoint will help you understand the intended outcome.
 If you can't get to the checkpoint, please reach out for help to the staff or [online forums](https://discourse.ubuntu.com/). You are also welcome to [open issues](https://github.com/valentincanonical/diy-microcloud/issues) directly on this repository.
 
 > **Checkpoint #0: [Minimum requirements matched.](#minimum-configuration)**    
