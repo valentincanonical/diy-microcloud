@@ -2,7 +2,9 @@
 
 # #5 Run cloud-native applications at the edge with micro clouds
 
-Your micro cloud is now ready, registered, and you know how to create lightweight MicroK8s clusters on demand. The next steps are optional, feel free to pick what's the most interesting to you. The goal there is to get you productive with fancy applications running on your homelab micro cloud.
+Your micro cloud is now ready and registered, and you know how to create lightweight MicroK8s clusters on demand. The next steps are optional. Feel free to pick what's the most interesting to you.
+
+The goal here is to get you productive with fancy applications running on your homelab micro cloud.
 
 <img alt="Micro cloud stack with kubernetes workloads running at the edge." src="./img/checkpoint-05.png" width="600" />
 
@@ -10,7 +12,7 @@ Your micro cloud is now ready, registered, and you know how to create lightweigh
 
 _Expected duration: 10mn_
 
-Portainer allows you to “build, manage and deploy containers in your Kubernetes environment quickly and easily. No more CLI, no more YAML, no more Kubernetes manifests. Just simple, fast, K8s configuration in a graphical UI, built on a trusted open source platform.”
+Portainer makes it possible to "build, manage and deploy containers in your Kubernetes environment quickly and easily. No more CLI, no more YAML, no more Kubernetes manifests. Just simple, fast, K8s configuration in a graphical UI, built on a trusted open source platform."
 
 The steps for [getting started with Portainer on MicroK8s](https://www.portainer.io/blog/how-to-deploy-portainer-on-microk8s) are fairly easy:
 
@@ -22,13 +24,13 @@ $ juju ssh microk8s/0
 root@worker1:~$ microk8s enable portainer
 ```
 
-Last step before accessing your Portainer dashboard: route the traffic from your machine to inside your micro cloud cluster.
+There's one last step before accessing your Portainer dashboard: route the traffic from your machine to inside your micro cloud cluster.
 
 You can either:
-- A/ configure a route on your machine `ip route add <lxd-cluster-subnet> via <node1-ip>`
-- B/ configure a reverse proxy on your micro cloud
+- A/ configure a route on your machine `ip route add <lxd-cluster-subnet> via <node1-ip>`.
+- B/ configure a reverse proxy on your micro cloud.
 
-We'll go with the reverse proxy option as it doesn't depend on your host configuration:
+We'll go with the reverse proxy option, as it doesn't depend on your host configuration:
 
 ```sh
 ubuntu@node1:~$ sudo apt update && sudo apt install -y nginx
@@ -46,11 +48,11 @@ ubuntu@node1:~$ sudo mv /tmp/portainer.conf /etc/nginx/sites-enabled/
 ubuntu@node1:~$ sudo systemctl restart nginx
 ```
 
-- Check the IP address of `node1` and access the Portainer dashboard at `http://<IP-address-node1>:30777` from your machine (eg; http://192.168.64.32:30777)
+- Check the IP address of `node1` and access the Portainer dashboard at `http://<IP-address-node1>:30777` from your machine (eg; http://192.168.64.32:30777).
 
-Now, as this is going to be an edge cluster, remotely managed, you probably want to register it to a central control place. With Portainer, this is super easy! Click [here and follow the instructions](https://documentation.portainer.io/v2.0/endpoints/edge/).
+Now, as this is going to be a remotely managed edge cluster, you probably want to register it to a central control place. With Portainer, this is super easy! Click [here and follow the instructions](https://documentation.portainer.io/v2.0/endpoints/edge/).
 
-If you're just trying this out and don't have a "central control plane", this is fine. You can create a new MicroK8s cluster that you will register from the Portainer dashboard that you just deployed, just for fun! Refer to [section 4](./step-04-microk8s-cluster.md#4-create-on-demand-microk8s-clusters) on how to do that.
+If you're just trying this out and don't have a "central control plane", this is fine. You can create a new MicroK8s cluster that you will register from the Portainer dashboard that you just deployed, just for fun! Refer to [section 4](./step-04-microk8s-cluster.md#4-create-on-demand-microk8s-clusters) for instructions on how to do that.
 
 <!-- TODO: for the demo, use New App -> ubuntu/grafana -> port 30000 -> cp nginx/portainer.conf -->
 
@@ -102,9 +104,9 @@ No instances found.
 ```
 
 If you used the AWS cloud machines option, simply:
-- "Terminate" the instances you launched for the tutorial
-- Remove the microcloud key from "Network & Security" > "Key Pairs"
-- Remove the microcloud Security Group from "Network & Security" > "Security Groups"
+1. "Terminate" the instances you launched for the tutorial.
+2. Remove the microcloud key from "Network & Security" > "Key Pairs".
+3. Remove the microcloud Security Group from "Network & Security" > "Security Groups".
 
 # Authors/Reviewers
 
