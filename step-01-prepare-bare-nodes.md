@@ -4,11 +4,11 @@
 
 _Expected duration: 10mn_
 
-> In a usual micro cloud setup, this step - bare metal provisioning - would be fully automated. [Metal as a Service (MAAS)](https://maas.io/) can provision several to hundreds of physical servers and micro clouds spread over various locations. MAAS provides a way to flexibly deploy, manage, and maintain operating system loads on physical servers. It keeps track of all servers and their configurations available in the micro cloud. It is the base layer of the micro cloud stack.
+> In a typical micro cloud setup, this step (bare metal provisioning) would be fully automated. [Metal as a Service (MAAS)](https://maas.io/) can provision anywhere from a handful to hundreds of physical servers and micro clouds spread over various locations. MAAS provides a way to flexibly deploy, manage, and maintain operating system loads on physical servers. It keeps track of all servers and their configurations available in the micro cloud. It is the base layer of the micro cloud stack.
 
 > In this virtual and one-site configuration, we won't be using MAAS. As micro clouds are fully modular, this will allow us to focus on the virtualisation and K8s layers. We invite you to [read more about MAAS](https://maas.io/tutorials) to automate your bare metal provisioning in further micro cloud deployments!
 
-These tutorial's instructions are made for using Multipass VMs (Option A), but if you're feeling confortable you can go with either Cloud VMs (recommended for smaller configurations) or Rapsberry Pis (recommended for nerdy users who want to get a working homelab out of this workshop).
+This tutorial's instructions use Multipass VMs (Option A), but if you're feeling confortable, you can go with either Cloud VMs (Option B, recommended for smaller configurations) or Rapsberry Pis (Option π, recommended for nerdy users who want to get a working homelab out of this workshop).
 
 
 ## Option A: Multipass virtual machines
@@ -39,7 +39,7 @@ ubuntu@node1:~$ logout
 
 ## Option B: EC2 (AWS) virtual machines
 
-If your machine is too small or already busy or the network too slow or you don't have the right permissions to install/run Multipass, using cloud virtual machines is a convenient backup option for this workshop.
+If your machine is too small or already busy, or the network is too slow or you don't have the right permissions to install/run Multipass, using cloud virtual machines is a convenient backup option for this workshop.
 
 This section documents how to use AWS EC2 instances instead of Multipass VMs. Please note that free-tier configurations won't be powerful enough to go through the end of the tutorial (running MicroK8s clusters). **You'll need to launch charged instances.**     
 
@@ -48,7 +48,7 @@ This section documents how to use AWS EC2 instances instead of Multipass VMs. Pl
 [Click here for instructions on how to configure the Amazon EC2 instances for this tutorial.](./step01-ec2-vms/README.md#using-ec2-instances-on-aws)
 
 Once you've completed the instructions linked above, following the tutorial should be easy.
-For the next steps of the tutorial, pay attention to the instructions and make sure to replace as following where needed:
+For the next steps of the tutorial, pay attention to the instructions and make sure to replace the following where needed:
 ```sh
 # multipass shell node1
 ssh node1.aws
@@ -63,7 +63,7 @@ juju add-machine ssh:ubuntu@ec2-node1-ip.region.compute.amazonaws.com
 
 ## Option π: Raspberry Pi cluster
 
-If you are using Raspberry Pis instead, you can [follow this tutorial to install the latest Ubuntu Server](https://ubuntu.com/tutorials/how-to-install-ubuntu-on-your-raspberry-pi#1-overview). We recommend using RPi 4+ 8GB, or above. (For stable deployments, we recommend you consider [the USB boot option](https://ubuntu.com/tutorials/how-to-install-ubuntu-desktop-on-raspberry-pi-4#4-optional-usb-boot) from an SSD instead of the SD card - from Ubuntu 20.10.)
+If you are using Raspberry Pis instead, you can [follow this tutorial to install the latest Ubuntu Server](https://ubuntu.com/tutorials/how-to-install-ubuntu-on-your-raspberry-pi#1-overview). We recommend using RPi 4+ 8GB, or above. (For stable deployments, we recommend you consider [the USB boot option](https://ubuntu.com/tutorials/how-to-install-ubuntu-desktop-on-raspberry-pi-4#4-optional-usb-boot) from an SSD instead of the SD card for Ubuntu 20.10 onward.)
 
 ---
 
