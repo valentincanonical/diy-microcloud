@@ -163,6 +163,9 @@ node3                   Running           192.168.64.34    Ubuntu 20.04 LTS
 
 $ multipass shell juju
 
+# First create a model to contain our machines and LXD application
+ubuntu@juju:~$ juju add-model microcloud
+
 # Add your micro cloud nodes as machines to the bare cloud
 # We use the '--verbose' option for more visibility
 ubuntu@juju:~$ juju add-machine --show-log -v ssh:ubuntu@<IP-node1>
