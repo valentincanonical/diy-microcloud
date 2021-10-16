@@ -131,6 +131,8 @@ default  microcloud-default  microcloud/default  2.9.12   unsupported  13:05:13+
 Model "admin/default" is empty.
 ```
 
+<img alt="LXD cloud" src="./img/checkpoints/checkpoint-03.png" width="600" />
+
 ### Deploy MicroK8s clusters in one Juju command
 
 #### Download the MicroK8s charm
@@ -246,7 +248,7 @@ high-availability: yes
 ...
 ```
 
-<img alt="MicroK8s cluster on LXD" src="./img/checkpoint-04.png" width="600" />
+<img alt="MicroK8s cluster on LXD" src="./img/checkpoints/checkpoint-04.png" width="600" />
 
 ---
 

@@ -195,7 +195,7 @@ Machine  State    DNS            Inst id               Series  AZ  Message
 
 > **Checkpoint #2: Juju bare cloud with micro cloud nodes added as machines.**
 
-<img alt="LXD cloud registered as a Juju cloud." src="./img/checkpoint-02.png" width="600" />
+<img alt="LXD cloud registered as a Juju cloud." src="./img/checkpoints/checkpoint-02.png" width="600" />
 
 ---
 

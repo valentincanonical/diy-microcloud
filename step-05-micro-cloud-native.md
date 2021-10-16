@@ -6,7 +6,7 @@ Your micro cloud is now ready and registered, and you know how to create lightwe
 
 The goal here is to get you productive with fancy applications running on your homelab micro cloud.
 
-<img alt="Micro cloud stack with kubernetes workloads running at the edge." src="./img/checkpoint-05.png" width="600" />
+<img alt="Micro cloud stack with kubernetes workloads running at the edge." src="./img/checkpoints/checkpoint-05.png" width="600" />
 
 ## Register your MicroK8s edge clusters with Portainer
 

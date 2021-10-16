@@ -141,7 +141,7 @@ _Expected overall tutorial duration: 70 minutes_
 
 Once the tutorial is complete, you'll get the following picture running on your edge/home lab.
 
-<img alt="" src="./img/checkpoint-05.png" width="600" />
+<img alt="" src="./img/checkpoints/checkpoint-05.png" width="600" />
 
 <!-- ### 1,2,3... 4 nodes -->
 <!-- ToDo: section about 3 or 4 nodes? 3 for HA, >4 for resilient HA. 3 to limit power usage. -->

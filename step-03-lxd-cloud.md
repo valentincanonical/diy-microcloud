@@ -74,8 +74,8 @@ ubuntu@node1:~$ lxc cluster list
 +-------+----------------------------+----------+--------+-------------------+
 ```
 
-<img alt="LXD cloud" src="./img/checkpoint-03-no-juju.png" width="600" />
-<!-- <img alt="LXD cloud" src="./img/checkpoint-03.png" width="600" /> -->
+<img alt="LXD cloud" src="./img/checkpoints/checkpoint-03-no-juju.png" width="600" />
+<!-- <img alt="LXD cloud" src="./img/checkpoints/checkpoint-03.png" width="600" /> -->
 
 ---
 

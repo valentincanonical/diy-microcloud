@@ -10,6 +10,7 @@ _Expected duration: 10mn_
 
 This tutorial's instructions use Multipass VMs (Option A), but if you're feeling confortable, you can go with either Cloud VMs (Option B, recommended for smaller configurations) or Rapsberry Pis (Option π, recommended for nerdy users who want to get a working homelab out of this workshop).
 
+<!-- TODO: add link to Anton's MAAS in Multipass tutorial (and try it) -->
 
 ## Option A: Multipass virtual machines
 
@@ -69,7 +70,7 @@ If you are using Raspberry Pis instead, you can [follow this tutorial to install
 
 > **Checkpoint #1: Three or four Ubuntu machines on the same network.**
 
-<img alt="Four Ubuntu machines on the same network." src="./img/checkpoint-01.png" width="600" />
+<img alt="Four Ubuntu machines on the same network." src="./img/checkpoints/checkpoint-01.png" width="600" />
 
 ---
 
