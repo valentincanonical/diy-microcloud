@@ -69,16 +69,7 @@ If you're just trying this out and don't have a "central control plane", this is
 
 _Expected duration: 10mn_
 
-TODO TODO TODO
-
-## Deploy applications to your micro cloud with Juju and Charms
-
-_Expected duration: 10mn_
-
-You first need to register your MicroK8s edge cluster with Juju. Click [here to scroll up](#register-your-microk8s-edge-clusters-with-juju).
-
-TODO TODO TODO
-
+TODO
 -->
 
 # How to clean your machine
@@ -114,9 +105,6 @@ If you used the AWS cloud machines option, simply:
 - Pedro Cruz, Product Lead, Canonical (Twitter: [@ArduinoPedro](https://twitter.com/ArduinoPedro))
 - Lex Joy, Curriculum Editor, Canonical
 
-<!-- ToDo: get relevant reviews from the different product teams involved. -->
-
-<!-- ToDo: validate license terms -->
 
 Table of Content generated with [gh-md-toc](https://github.com/ekalinin/github-markdown-toc).
 

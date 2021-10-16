@@ -2,9 +2,6 @@
 
 <!-- 
 
-LXD requires to build with charmcraft (complex and useless)
-TODO: update with final LXD charm once ready, or distribute private precompiled charms
-
 TODO: more drawings and more on the outcome
 
 TODO: LXD from charmhub command to be checked
