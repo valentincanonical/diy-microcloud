@@ -23,8 +23,6 @@ Search for "Ubuntu" and pick the latest LTS (20.04) version available.
 
 <img alt="Ubuntu LTS cloud images" src="../img/aws/02-ubuntu.png" width="800" />
 
-<!-- TODO test tutorial on ARM64 and compile stuff -->
-
 #### Choose the instances type
 
 The free-tier won't be enough for the micro cloud nodes, select an instance type with at least:

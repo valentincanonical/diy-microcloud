@@ -15,11 +15,10 @@ Portainer allows you to “build, manage and deploy containers in your Kubernete
 The steps for [getting started with Portainer on MicroK8s](https://www.portainer.io/blog/how-to-deploy-portainer-on-microk8s) are fairly easy:
 
 ```sh
-# If you used Juju to deploy MicroK8s
 $ juju ssh microk8s/0
-# Otherwise -- multipass shell node1; lxc shell worker1;
+# Or -- multipass shell node1; lxc shell worker1;
 
-# **Enable the Portainer addon**
+# Enable the Portainer addon
 root@worker1:~$ microk8s enable portainer
 ```
 
@@ -57,7 +56,7 @@ If you're just trying this out and don't have a "central control plane", this is
 
 ## Beyond the workshop
 
-- [Deploy an application on your kubernetes cluster from Canonical's LTS Docker Images](TODO)
+- [Deploy an application on your kubernetes cluster from Canonical's LTS Docker Images](https://ubuntu.com/security/docker-images)
 - [Register your MicroK8s edge cluster with Juju](TODO)
 - [Deploy applications to your micro cloud with Juju and Charmed Operators](TODO)
 - [Register an edge endpoint with Portainer](https://documentation.portainer.io/v2.0/endpoints/edge/)
@@ -111,8 +110,6 @@ If you used the AWS cloud machines option, simply:
 
 - Valentin Viennot, Product Manager, Canonical (Twitter: [@ValentinViennot](https://twitter.com/valentinviennot))
 - Pedro Cruz, Product Lead, Canonical (Twitter: [@ArduinoPedro](https://twitter.com/ArduinoPedro))
-
-<!-- TODO: make review by Theodora -->
 
 <!-- ToDo: get relevant reviews from the different product teams involved. -->
 

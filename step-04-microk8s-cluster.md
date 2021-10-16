@@ -177,9 +177,15 @@ kubernetes-is-easy  microcloud-default  microcloud/default  2.9.14   unsupported
 Model "admin/kubernetes-is-easy" is empty.
 ```
 
+We deploy the app `microk8s` from the locally downloaded MicroK8s charm.
+
+> The `--force` option is required as we use an unvalidated LXD profile.    
+> For ARM64 users, the `--constraints arch=arm64` option tells juju to provision ARM64 virtual machines.
+
 ```sh
-# We deploy the app 'microk8s' from the local charm with force option as we use an unvalidated LXD profile
 ubuntu@node1:~$ juju deploy ./microk8s_ubuntu-20.04.charm microk8s -n3 --force
+# For ARM users:
+# juju deploy ./microk8s_ubuntu-20.04.charm microk8s -n3 --force --constraints arch=arm64
 
 # We can watch operations as they happen with 'juju status'
 ubuntu@node1:~$ watch --color juju status --color

@@ -1,7 +1,5 @@
 [< back to Step 4: Create on-demand MicroK8s clusters](../step-04-microk8s-cluster.md#4-create-on-demand-microk8s-clusters)
 
-<!-- TODO -->
-
 # On-demand Micro Kubernetes Clusters
 
 ## Manual Installation
