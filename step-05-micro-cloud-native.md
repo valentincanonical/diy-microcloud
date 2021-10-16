@@ -112,6 +112,7 @@ If you used the AWS cloud machines option, simply:
 
 - Valentin Viennot, Product Manager, Canonical (Twitter: [@ValentinViennot](https://twitter.com/valentinviennot))
 - Pedro Cruz, Product Lead, Canonical (Twitter: [@ArduinoPedro](https://twitter.com/ArduinoPedro))
+- Lex Joy, Curriculum Editor, Canonical
 
 <!-- ToDo: get relevant reviews from the different product teams involved. -->
 
