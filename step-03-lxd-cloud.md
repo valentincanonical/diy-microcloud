@@ -20,14 +20,17 @@ Abstracting away from the bare metal layer is a practical step to building autom
 Thanks to Model Driven Operations, deploying and operating software is automated and repeatable; two key qualities for edge deployments.
 Here's how to use the [LXD Charmed Operator](https://github.com/canonical/charm-lxd) to deploy and configure your micro cloud LXD cluster in one command.
 
+<!-- for i in {1..3}; do ssh node$i.aws -- sudo snap remove lxd --purge; ssh node$i.aws -- sudo /sbin/remove-juju-services; done; -->
+
 ### Deploy the LXD Charm
 
 One command to deploy and configure your LXD cluster with Juju and the [LXD machine charm](https://charmhub.io/lxd):
 ```sh
-ubuntu@juju:~$ juju deploy lxd -n3 --to 0,1,2 --config mode=cluster
+ubuntu@juju:~$ juju deploy lxd -n3 --to 0,1,2 --config mode=cluster # --constraints arch=arm64
 # deploy -n: 3 units of the LXD application,
 # --to: the micro cloud machines O,1,2 that we manually added,
 # --config mode=cluster: tell the Charm to cluster the nodes
+# For ARM64 users, you'll need to specify the '--constraints arch=arm64' option
 ```
 
 Grab a cocktail 🍹 while you watch Juju deploy and configure everything for you:

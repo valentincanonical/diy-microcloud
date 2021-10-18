@@ -54,13 +54,11 @@ Now, as this is going to be a remotely managed edge cluster, you probably want t
 
 If you're just trying this out and don't have a "central control plane", this is fine. You can create a new MicroK8s cluster that you will register from the Portainer dashboard that you just deployed, just for fun! Refer to [section 4](./step-04-microk8s-cluster.md#4-create-on-demand-microk8s-clusters) for instructions on how to do that.
 
-<!-- TODO: for the demo, use New App -> ubuntu/grafana -> port 30000 -> cp nginx/portainer.conf -->
-
 ## Beyond the workshop
 
 - [Deploy an application on your kubernetes cluster from Canonical's LTS Docker Images](https://ubuntu.com/security/docker-images)
-- [Register your MicroK8s edge cluster with Juju](TODO)
-- [Deploy applications to your micro cloud with Juju and Charmed Operators](TODO)
+- [Register your MicroK8s edge cluster with Juju](https://juju.is/docs/olm/other-clusters#heading--register-the-cluster-with-juju)
+- [Deploy applications to your micro cloud with Juju and Charmed Operators](https://juju.is/docs/olm/deploying-applications)
 - [Register an edge endpoint with Portainer](https://documentation.portainer.io/v2.0/endpoints/edge/)
 - Create more isolated on-demand kubernetes clusters on your edge micro cloud with    
   `juju add-model my-kubernetes && juju deploy microk8s -n1`

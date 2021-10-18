@@ -67,7 +67,7 @@ $ multipass shell juju
 ubuntu@juju:~$ sudo snap install juju --classic
 ```
 
-<!-- TODO: refer back to the VPN issues doc -->
+> If you are getting errors related to DNS issues, your VPN might be the root cause. [Read more](./README.md#issues-with-vpn-software).
 
 ### Configure SSH access
 
@@ -110,8 +110,6 @@ Now that we have everything in place, let's create a Juju bare cloud to control 
 > If we used MAAS to provision our nodes, these steps would be much easier!
 > We'll keep that in mind for the next time.
 
-<!-- ToDo: explain the concept, what is happening behind the scenes, high level -->
-
 ```sh
 $ multipass shell juju
 # Make sure to write down the IP address of your Juju controller
@@ -149,10 +147,6 @@ Initial model "default" added
 ```
 
 ### Add the micro cloud nodes to your Juju bare cloud
-
-<!-- 
-TODO: add some backup materials here during the wait
--->
 
 ```sh
 # Make sure to write down the IP addresses of your micro cloud nodes

@@ -13,16 +13,11 @@ In a micro cloud architecture, Kubernetes APIs make management of edge clusters 
 
 ## Option A: Deploy on-demand kubernetes clusters in one Juju command
 
-Currently, there is no MicroK8s charm on [CharmHub](https://charmhub.io/), the Store for Charmed Operators. However, there is a version contributed [by @pjdc](https://launchpad.net/~pjdc/+git/charm-microk8s) a community member on Launchpad. It's just a matter of time until we get an official one!
+Now that we have a LXD micro cloud, we want to be able to operate it from Juju with Charmed Operators.
 
-For this workshop, we forked pjdc's version and adapted it to work on top of LXD.
-
-We'll start by downloading this custom MicroK8s Charmed Operator, a package with all the knowledge on how to deploy a MicroK8s cluster on top of LXD.
+For that, we first need to register it.
 
 ### Register our LXD micro cloud for Model-Driven Operations
-
-Now that we have a LXD micro cloud, we want to be able to operate it from Juju with Charmed Operators.
-For that, we need to register it.
 
 #### Prepare the credentials to connect to our LXD micro cloud
 
@@ -135,6 +130,12 @@ Model "admin/default" is empty.
 
 ### Deploy MicroK8s clusters in one Juju command
 
+Currently, there is no MicroK8s charm on [CharmHub](https://charmhub.io/), the Store for Charmed Operators. However, there is a version contributed [by @pjdc](https://launchpad.net/~pjdc/+git/charm-microk8s) a community member on Launchpad. It's just a matter of time until we get an official one!
+
+For this workshop, we forked pjdc's version and adapted it to work on top of LXD.
+
+We'll start by downloading this custom MicroK8s Charmed Operator, a package with all the knowledge on how to deploy a MicroK8s cluster on top of LXD.
+
 #### Download the MicroK8s charm
 
 ```sh
@@ -143,9 +144,6 @@ ubuntu@node1:~$ wget https://raw.githubusercontent.com/valentincanonical/diy-mic
 
 # For AMD64 users
 ubuntu@node1:~$ wget https://raw.githubusercontent.com/valentincanonical/diy-microcloud/main/precompiled/microk8s_ubuntu-20.04-amd64.charm -O microk8s_ubuntu-20.04.charm
-
-# For Rapsberry Pi ARM64 users
-TODO file for Rpi users
 ```
 
 <details>
@@ -211,12 +209,6 @@ Machine  State    DNS          Inst id        Series  AZ  Message
 2        pending               pending        focal
 ```
 
-<!--
-TODO: tell the story
-- what is happening
-- what have we achieved
-- what are we going to do next?
--->
 Once everything is green and active/ready, we can make use of our MicroK8s cluster!
 
 ```sh

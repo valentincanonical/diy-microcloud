@@ -4,8 +4,6 @@
 
 TODO: more drawings and more on the outcome
 
-TODO: LXD from charmhub command to be checked
-
 -->
 
 **Have you dreamt of having your own home cloud but found it too complex?     
@@ -26,7 +24,6 @@ But it also has value for experts, talking DevOps, AI use cases, and inferences 
 <img alt="Micro cloud: a cloudish layer cake." src="https://res.cloudinary.com/canonical/image/fetch/f_auto,q_auto,fl_sanitize,w_752,h_430/https://assets.ubuntu.com/v1/1bb2f79a-telco-micro-clouds.svg" width="400" />
 </p>
 
-<!-- TODO: update table of contents -->
 Table of Contents
 =================
 
@@ -109,28 +106,30 @@ Before attending the session, please make sure you can use Multipass. The follow
 
 ### Issues with VPN software
 
-It has been reported that VPNs (OpenVPN, AnyConnect...) might cause DNS issues.
+It has been reported that VPNs (OpenVPN, AnyConnect...) might cause network issues.
 **If you have the option to disable your VPN, please do.**
 Otherwise, you can try [this workaround](https://github.com/canonical/multipass/issues/495#issuecomment-448461250).
 
+<details>
+    <summary>
+After applying the workaround, if you still get error messages related to DNS, here's a few steps you can take (click to expand).
+    </summary>
+
+```sh
+   $ multipass shell node1 # do that in all the machines
+   ubuntu@node1:~$ sudo mkdir /etc/systemd/resolve.conf.d
+   ubuntu@node1:~$ cat > /etc/systemd/resolve.conf.d/dns_servers.conf <<EOF
+      [Resolve]
+      DNS=1.1.1.1
+      Domains=~.
+   EOF
+```
+
+</details>
+</br>
+
 **If you can't get it to work on your machine, please consider going for cloud virtual machines.**    
 To set it up before the workshop, refer to [the next step's instructions](./step-01-prepare-bare-nodes.md#option-b-ec2-aws-virtual-machines).
-<!-- TODO: also add the DNS workaround -->
-<!--
-
-$ multipass shell node1 [Or whatever node needs to be configured]
-ubuntu@node1:~$ sudo mkdir /etc/systemd/resolve.conf.d
-ubuntu@node1:~$ sudo touch /etc/systemd/resolve.conf.d/dns_servers.conf
-ubuntu@node1:~$ sudo nano /etc/systemd/resolve.conf.d/dns_servers.conf
- 
-And in the file add:
-
-[Resolve]
-DNS=1.1.1.1
-Domains=~.
-
--->
-
 
 ## Building Your Home Lab Micro Cloud in 5 Steps
 

@@ -6,11 +6,10 @@ _Expected duration: 10mn_
 
 > In a typical micro cloud setup, this step (bare metal provisioning) would be fully automated. [Metal as a Service (MAAS)](https://maas.io/) can provision anywhere from a handful to hundreds of physical servers and micro clouds spread over various locations. MAAS provides a way to flexibly deploy, manage, and maintain operating system loads on physical servers. It keeps track of all servers and their configurations available in the micro cloud. It is the base layer of the micro cloud stack.
 
-> In this virtual and one-site configuration, we won't be using MAAS. As micro clouds are fully modular, this will allow us to focus on the virtualisation and K8s layers. We invite you to [read more about MAAS](https://maas.io/tutorials) to automate your bare metal provisioning in further micro cloud deployments!
+> In this virtual and one-site configuration, we won't be using MAAS. As micro clouds are fully modular, this will allow us to focus on the virtualisation and K8s layers. We invite you to [read more about MAAS](https://maas.io/tutorials) to automate your bare metal provisioning in further micro cloud deployments!     
+> There's even [a great tutorial](https://maas.io/tutorials/build-a-maas-and-lxd-environment-in-30-minutes-with-multipass-on-ubuntu#1-overview) to get you started in 30mn with MAAS in Multipass.
 
 This tutorial's instructions use Multipass VMs (Option A), but if you're feeling confortable, you can go with either Cloud VMs (Option B, recommended for smaller configurations) or Rapsberry Pis (Option π, recommended for nerdy users who want to get a working homelab out of this workshop).
-
-<!-- TODO: add link to Anton's MAAS in Multipass tutorial (and try it) -->
 
 ## Option A: Multipass virtual machines
 
